@@ -1,0 +1,598 @@
+
+// import 'package:flutter/material.dart';
+// import 'attendance_page.dart';
+// import 'profile_page.dart'; // Make sure this file exists
+
+// // App Colors
+// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+// const Color kAppBarColor = Color(0xFF8C6EAF);
+// const Color kButtonColor = Color(0xFF655193);
+// const Color kTextColor = Colors.white;
+
+// class HomeScreen extends StatelessWidget {
+//   final String userName;
+
+//   const HomeScreen({super.key, required this.userName});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: kPrimaryBackgroundBottom,
+//       body: SafeArea(
+//         child: LayoutBuilder(
+//           builder: (context, constraints) {
+//             return SingleChildScrollView(
+//               child: ConstrainedBox(
+//                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
+//                 child: IntrinsicHeight(
+//                   child: Column(
+//                     children: [
+//                       // Top bar
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             const Text(
+//                               'SERV',
+//                               style: TextStyle(
+//                                 fontWeight: FontWeight.bold,
+//                                 fontSize: 23,
+//                                 color: kAppBarColor,
+//                               ),
+//                             ),
+//                             Row(
+//                               children: const [
+//                                 Icon(Icons.location_on, color: kTextColor),
+//                                 SizedBox(width: 22),
+//                                 Icon(Icons.warning, color: kTextColor),
+//                                 SizedBox(width: 22),
+//                                 Icon(Icons.person, color: kTextColor),
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       Container(height: 3, color: kAppBarColor),
+
+//                       const SizedBox(height: 16),
+
+//                       Center(
+//                         child: Text(
+//                           'Hello, $userName',
+//                           style: const TextStyle(
+//                             color: kTextColor,
+//                             fontWeight: FontWeight.w600,
+//                             fontSize: 15,
+//                           ),
+//                         ),
+//                       ),
+
+//                       const SizedBox(height: 8),
+
+//                       const Center(
+//                         child: Text(
+//                           'With SERV, You Deserve the Best',
+//                           style: TextStyle(
+//                             color: Colors.white70,
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w700,
+//                           ),
+//                         ),
+//                       ),
+
+//                       const SizedBox(height: 8),//20
+
+//                       // Image
+//                       SizedBox(
+//                         height: 200,
+//                         width: 200,
+//                         child: Image.asset('assets/images/attendance-management.png'),
+//                       ),
+
+//                       const SizedBox(height: 3),
+
+//                       // Attendance and Emergency Buttons
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 40),
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             // Attendance
+//                             GestureDetector(
+//                               onTap: () {
+//                                 Navigator.push(
+//                                   context,
+//                                   MaterialPageRoute(
+//                                     builder: (_) => const AttendancePage(),
+//                                   ),
+//                                 );
+//                               },
+//                               child: Container(
+//                                 width: 100,
+//                                 height: 100,
+//                                 decoration: BoxDecoration(
+//                                   color: kPrimaryBackgroundBottom,
+//                                   borderRadius: BorderRadius.circular(18),
+//                                   boxShadow: [
+//                                     BoxShadow(
+//                                       color: Colors.black12,
+//                                       blurRadius: 5,
+//                                       offset: Offset(2, 2),
+//                                     ),
+//                                   ],
+//                                 ),
+//                                 child: Column(
+//                                   mainAxisAlignment: MainAxisAlignment.center,
+//                                   children: const [
+//                                     Icon(Icons.calendar_month, size: 50, color: kAppBarColor),
+//                                     SizedBox(height: 8),
+//                                     Text(
+//                                       'Attendance',
+//                                       style: TextStyle(
+//                                         fontWeight: FontWeight.bold,
+//                                         color: Colors.black,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ),
+
+//                             // Emergency
+//                             Container(
+//                               width: 100,
+//                               height: 100,
+//                               decoration: BoxDecoration(
+//                                 color: Colors.red[100],
+//                                 borderRadius: BorderRadius.circular(18),
+//                                 boxShadow: [
+//                                   BoxShadow(
+//                                     color: Colors.black12,
+//                                     blurRadius: 5,
+//                                     offset: Offset(2, 2),
+//                                   ),
+//                                 ],
+//                               ),
+//                               child: Column(
+//                                 mainAxisAlignment: MainAxisAlignment.center,
+//                                 children: const [
+//                                   Icon(Icons.touch_app, size: 50, color: Colors.redAccent),
+//                                   SizedBox(height: 8),
+//                                   Text(
+//                                     'Emergency\nButton',
+//                                     textAlign: TextAlign.center,
+//                                     style: TextStyle(
+//                                       fontWeight: FontWeight.bold,
+//                                       color: Colors.black,
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+
+//                       // const Spacer(),
+//                       const SizedBox(height: 20),
+//                       GestureDetector(onTap: () {
+//                         ScaffoldMessenger.of(context).showSnackBar(
+//                           const SnackBar(content: Text("hi from my serv")),
+//                         );
+//                       },
+//                       child: Container(
+//                         height: 30,
+//                         width: 100,
+//                         decoration: BoxDecoration(
+//                           color: kButtonColor,
+//                           borderRadius: BorderRadius.circular(30),
+//                           boxShadow: const[
+//                             BoxShadow(
+//                               color: Colors.black26,
+//                               blurRadius: 6,
+//                               offset: Offset(2,3),
+//                             ),
+//                           ],
+//                         ),
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: const[
+//                             Text(
+//                               'My Serv',
+//                               style: TextStyle(
+//                                 fontSize: 14,
+//                                 fontWeight: FontWeight.bold,
+//                                 color:Colors.white,
+//                               ),
+//                             ),
+//                             SizedBox(width: 8),
+//                             Icon(
+//                               Icons.arrow_forward,
+//                               color: Colors.white,
+//                               size: 20,
+//                             )
+//                           ],
+//                         ),
+                        
+//                       ),
+//                       ),
+//                       const Spacer()
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+
+//       // Bottom Navigation Bar
+//       bottomNavigationBar: Container(
+//         height: 40,
+//         decoration: const BoxDecoration(
+//           color: kAppBarColor,
+//           borderRadius: BorderRadius.only(
+//             topLeft: Radius.circular(26),
+//             topRight: Radius.circular(26),
+//           ),
+//         ),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: [
+//             BottomNavItem(icon: Icons.home, label: 'Home'),
+
+//             // Navigate to ProfilePage on tap
+//             BottomNavItem(
+//               icon: Icons.person,
+//               label: 'Profile',
+//               onTap: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(builder: (_) => const ProfilePage(userData: {})),
+//                 );
+//               },
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class BottomNavItem extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
+//   final VoidCallback? onTap;
+
+//   const BottomNavItem({
+//     super.key,
+//     required this.icon,
+//     required this.label,
+//     this.onTap,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Icon(icon, color: kTextColor, size: 18),
+//           Text(
+//             label,
+//             style: const TextStyle(
+//               color: kTextColor,
+//               fontWeight: FontWeight.w600,
+//               fontSize: 9,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+import 'package:flutter/material.dart';
+import 'attendance_page.dart';
+import 'profile_page.dart';
+import 'package:serv_app/Pagesusers/myserv_page.dart'; // ✅ Added for MyServPage
+
+// App Colors
+const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+const Color kAppBarColor = Color(0xFF8C6EAF);
+const Color kButtonColor = Color(0xFF655193);
+const Color kTextColor = Colors.white;
+
+class HomeScreen extends StatelessWidget {
+  final String userName;
+
+  const HomeScreen({super.key, required this.userName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: kPrimaryBackgroundBottom,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      // Top bar
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'SERV',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: kAppBarColor,
+                              ),
+                            ),
+                            Row(
+                              children: const [
+                                Icon(Icons.location_on, color: kTextColor),
+                                SizedBox(width: 22),
+                                Icon(Icons.warning, color: kTextColor),
+                                SizedBox(width: 22),
+                                Icon(Icons.person, color: kTextColor),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(height: 3, color: kAppBarColor),
+
+                      const SizedBox(height: 16),
+
+                      Center(
+                        child: Text(
+                          'Hello, $userName',
+                          style: const TextStyle(
+                            color: kTextColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      const Center(
+                        child: Text(
+                          'With SERV, You Deserve the Best',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      // Image
+                      SizedBox(
+                        height: 200,
+                        width: 200,
+                        child: Image.asset('assets/images/attendance-management.png'),
+                      ),
+
+                      const SizedBox(height: 3),
+
+                      // Attendance and Emergency Buttons
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Attendance
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const AttendancePage(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: kPrimaryBackgroundBottom,
+                                  borderRadius: BorderRadius.circular(18),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 5,
+                                      offset: Offset(2, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.calendar_month, size: 50, color: kAppBarColor),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      'Attendance',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Emergency
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.red[100],
+                                borderRadius: BorderRadius.circular(18),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 5,
+                                    offset: Offset(2, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.touch_app, size: 50, color: Colors.redAccent),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Emergency\nButton',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // ✅ My Serv Button (updated)
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const MyServPage()),
+                          );
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: kButtonColor,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(2, 3),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'My Serv',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+
+      // Bottom Navigation Bar
+      bottomNavigationBar: Container(
+        height: 40,
+        decoration: const BoxDecoration(
+          color: kAppBarColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(26),
+            topRight: Radius.circular(26),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            BottomNavItem(icon: Icons.home, label: 'Home'),
+
+            // Profile
+            BottomNavItem(
+              icon: Icons.person,
+              label: 'Profile',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProfilePage(userData: {}),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BottomNavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+
+  const BottomNavItem({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: kTextColor, size: 18),
+          Text(
+            label,
+            style: const TextStyle(
+              color: kTextColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 9,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
