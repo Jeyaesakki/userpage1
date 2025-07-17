@@ -178,37 +178,7 @@ class OthersPage extends StatelessWidget {
             child: ListView(
               children: [
                 // Header Row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'SERV',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        color: kButtonColor,
-                      ),
-                    ),
-                    Row(
-                      children: const [
-                        Text(
-                          'Welcome to SERV 🌐 EN ',
-                          style: TextStyle(fontSize: 12, color: Color.fromARGB(255, 22, 19, 19)),
-                        ),
-                        SizedBox(width: 4),
-                        CircleAvatar(
-                          backgroundColor: Color.fromARGB(255, 15, 8, 8),
-                          radius: 14,          
-                          child: Text(
-                            'MR',
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 30),
+              
 
                 const Text(
                   'Others',

@@ -428,9 +428,18 @@
 //   }
 // }
 
+
+
 import 'package:flutter/material.dart';
 import 'create_shift_page.dart';
 import 'shift_permission_page.dart';
+
+// Theme Colors
+const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+const Color kAppBarColor = Color(0xFF8C6EAF);
+const Color kButtonColor = Color(0xFF655193);
+const Color kTextColor = Colors.white;
 
 class WorkdaysShiftPage extends StatefulWidget {
   const WorkdaysShiftPage({super.key});
@@ -444,7 +453,6 @@ class _WorkdaysShiftPageState extends State<WorkdaysShiftPage> {
   bool _isCreateShiftClicked = false;
 
   List<Map<String, String>> _createdShifts = [];
-  // Holds dynamic shift data
 
   void _navigateToShiftPermission(BuildContext context) {
     Navigator.push(
@@ -461,7 +469,7 @@ class _WorkdaysShiftPageState extends State<WorkdaysShiftPage> {
 
     if (result != null) {
       setState(() {
-        _createdShifts.add(result); // Add new shift to the list
+        _createdShifts.add(result);
       });
     }
   }
@@ -469,112 +477,110 @@ class _WorkdaysShiftPageState extends State<WorkdaysShiftPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Workdays & Shifts")),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Shift Configuration",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Choose your shift",
-              style: TextStyle(fontSize: 14, color: Colors.black54),
-            ),
-            const SizedBox(height: 16),
+      backgroundColor: kPrimaryBackgroundTop,
+      appBar: AppBar(
+        title: const Text("Workdays & Shifts"),
+        backgroundColor: kAppBarColor,
+        foregroundColor: kTextColor,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Shift Configuration",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Choose your shift",
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+              ),
+              const SizedBox(height: 16),
 
-            const _ShiftTemplateCard(
-              title: "Template 1",
-              time: "09:30 AM - 06:30 PM",
-            ),
-            const SizedBox(height: 10),
-            const _ShiftTemplateCard(
-              title: "Template 2",
-              time: "07:30 AM - 04:30 PM",
-            ),
-            const SizedBox(height: 10),
-            const _ShiftTemplateCard(
-              title: "Template 3",
-              time: "12:30 AM - 11:59 PM",
-            ),
-
-            const SizedBox(height: 10),
-            for (int i = 0; i < _createdShifts.length; i++) ...[
-              _ShiftTemplateCard(
-                title:
-                    "Template ${i + 4}: ${_createdShifts[i]["shiftName"] ?? "Shift"}",
-                time:
-                    "${_createdShifts[i]["startTime"]} - ${_createdShifts[i]["endTime"]}",
+              const _ShiftTemplateCard(
+                title: "Template 1",
+                time: "09:30 AM - 06:30 PM",
               ),
               const SizedBox(height: 10),
-            ],
+              const _ShiftTemplateCard(
+                title: "Template 2",
+                time: "07:30 AM - 04:30 PM",
+              ),
+              const SizedBox(height: 10),
+              const _ShiftTemplateCard(
+                title: "Template 3",
+                time: "12:30 AM - 11:59 PM",
+              ),
+              const SizedBox(height: 10),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: _isShiftPermissionClicked
-                        ? Colors.blueAccent
-                        : Colors.transparent,
-                    foregroundColor: _isShiftPermissionClicked
-                        ? Colors.white
-                        : Colors.black,
-                    side: const BorderSide(color: Colors.blueAccent),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 14,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isShiftPermissionClicked = true;
-                      _isCreateShiftClicked = false;
-                    });
-                    _navigateToShiftPermission(context);
-                  },
-                  child: const Text("Shift Permissions"),
+              for (int i = 0; i < _createdShifts.length; i++) ...[
+                _ShiftTemplateCard(
+                  title: "Template ${i + 4}: ${_createdShifts[i]["shiftName"] ?? "Shift"}",
+                  time: "${_createdShifts[i]["startTime"]} - ${_createdShifts[i]["endTime"]}",
                 ),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: _isCreateShiftClicked
-                        ? Colors.teal
-                        : Colors.transparent,
-                    foregroundColor: _isCreateShiftClicked
-                        ? Colors.white
-                        : Colors.black,
-                    side: const BorderSide(color: Colors.teal),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 14,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isCreateShiftClicked = true;
-                      _isShiftPermissionClicked = false;
-                    });
-                    _navigateToCreateShift(context);
-                  },
-                  child: const Text("Create Shift"),
-                ),
+                const SizedBox(height: 10),
               ],
-            ),
 
-            const SizedBox(height: 30),
-            _buildTableHeader(),
-            const Divider(),
-            _buildTableFooter(),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: _isShiftPermissionClicked ? kButtonColor : Colors.transparent,
+                      foregroundColor: _isShiftPermissionClicked ? kTextColor : Colors.black,
+                      side: const BorderSide(color: kButtonColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isShiftPermissionClicked = true;
+                        _isCreateShiftClicked = false;
+                      });
+                      _navigateToShiftPermission(context);
+                    },
+                    child: const Text("Shift Permissions"),
+                  ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: _isCreateShiftClicked ? kButtonColor : Colors.transparent,
+                      foregroundColor: _isCreateShiftClicked ? kTextColor : Colors.black,
+                      side: const BorderSide(color: kButtonColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isCreateShiftClicked = true;
+                        _isShiftPermissionClicked = false;
+                      });
+                      _navigateToCreateShift(context);
+                    },
+                    child: const Text("Create Shift"),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+              _buildTableHeader(),
+              const Divider(),
+              _buildTableFooter(),
+            ],
+          ),
         ),
       ),
     );
@@ -624,7 +630,7 @@ class _ShiftTemplateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.pink.shade100,
+      color: kAppBarColor.withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: SizedBox(
         width: double.infinity,
@@ -662,7 +668,11 @@ class _HeaderCell extends StatelessWidget {
       child: Text(
         label,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+          color: kButtonColor,
+        ),
       ),
     );
   }

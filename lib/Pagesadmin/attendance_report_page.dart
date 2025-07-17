@@ -779,19 +779,19 @@
 //   });
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:serv_app/Pagesadmin/attendance_report_screen_page.dart';
 
-// Color constants
-const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
-const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
-const Color kAppBarColor = Color(0xFF8C6EAF);
-const Color kButtonColor = Color(0xFF655193);
+
+const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF); // Light lavender
+const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9); // Deeper lavender
+const Color kAppBarColor = Color(0xFF8c6eaf); // Updated app bar color
+const Color kButtonColor = Color(0xFF655193); // Updated button color
 const Color kTextColor = Colors.white;
 
 class AttendanceReportScreen extends StatefulWidget {
-  const AttendanceReportScreen({Key? key, required String initialFilter}) : super(key: key);
+  const AttendanceReportScreen({Key? key, required String initialFilter})
+    : super(key: key);
 
   @override
   State<AttendanceReportScreen> createState() => _AttendanceReportScreenState();
@@ -873,10 +873,12 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
     switch (filter) {
       case 'Checked-In':
         return _allRecords
-            .where((r) =>
-                r.attendance == 'Present' ||
-                r.attendance == 'Late' ||
-                r.attendance == 'Half Day')
+            .where(
+              (r) =>
+                  r.attendance == 'Present' ||
+                  r.attendance == 'Late' ||
+                  r.attendance == 'Half Day',
+            )
             .toList();
       case 'Absent':
         return _allRecords.where((r) => r.attendance == 'Absent').toList();
@@ -914,9 +916,11 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
     });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(_selectedFilter.isEmpty
-            ? 'Filter cleared - showing all records'
-            : 'Showing $_selectedFilter records'),
+        content: Text(
+          _selectedFilter.isEmpty
+              ? 'Filter cleared - showing all records'
+              : 'Showing $_selectedFilter records',
+        ),
         backgroundColor: kButtonColor,
         duration: const Duration(seconds: 2),
       ),
@@ -961,40 +965,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
     final isWeb = MediaQuery.of(context).size.width > 600;
     return Scaffold(
       backgroundColor: kPrimaryBackgroundBottom,
-      appBar: AppBar(
-        backgroundColor: kAppBarColor,
-        elevation: 0,
-        title: Text(
-          'Welcome to SERV',
-          style: TextStyle(
-            fontSize: isWeb ? 16 : 14,
-            color: kTextColor,
-          ),
-        ),
-        iconTheme: IconThemeData(color: kTextColor),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 12),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: kTextColor,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text('EN',
-                style: TextStyle(
-                    color: kButtonColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: isWeb ? 12 : 10)),
-          ),
-          Center(
-            child: Text(
-              'MENU',
-              style: TextStyle(color: kTextColor),
-            ),
-          ),
-          const SizedBox(width: 12),
-        ],
-      ),
+      
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -1014,29 +985,34 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                 children: [
                   Icon(Icons.chevron_right, color: kButtonColor),
                   const SizedBox(width: 4),
-                  Text('Attendance Reports',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: kButtonColor,
-                      )),
+                  Text(
+                    'Attendance Reports',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: kButtonColor,
+                    ),
+                  ),
                   if (_selectedFilter.isNotEmpty) ...[
                     const SizedBox(width: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: kButtonColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
-                          Text('Filter: $_selectedFilter',
-                              style: TextStyle(color: kButtonColor)),
                           const SizedBox(width: 4),
                           GestureDetector(
                             onTap: () => _onCardTapped(_selectedFilter),
-                            child: Icon(Icons.close,
-                                size: 14, color: kButtonColor),
+                            child: Icon(
+                              Icons.close,
+                              size: 14,
+                              color: kButtonColor,
+                            ),
                           ),
                         ],
                       ),
@@ -1063,11 +1039,14 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('From',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: isWeb ? 14 : 12,
-                                          color: kButtonColor)),
+                                  Text(
+                                    'From',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: isWeb ? 14 : 12,
+                                      color: kButtonColor,
+                                    ),
+                                  ),
                                   SizedBox(height: isWeb ? 8 : 6),
                                   GestureDetector(
                                     onTap: () => _selectDate(context, true),
@@ -1078,7 +1057,8 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: kButtonColor.withOpacity(0.5)),
+                                          color: kButtonColor.withOpacity(0.5),
+                                        ),
                                         borderRadius: BorderRadius.circular(6),
                                         color: kPrimaryBackgroundTop,
                                       ),
@@ -1096,9 +1076,11 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                               ),
                                             ),
                                           ),
-                                          Icon(Icons.calendar_today,
-                                              size: isWeb ? 16 : 14,
-                                              color: kButtonColor),
+                                          Icon(
+                                            Icons.calendar_today,
+                                            size: isWeb ? 16 : 14,
+                                            color: kButtonColor,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -1114,11 +1096,14 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('To',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: isWeb ? 14 : 12,
-                                          color: kButtonColor)),
+                                  Text(
+                                    'To',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: isWeb ? 14 : 12,
+                                      color: kButtonColor,
+                                    ),
+                                  ),
                                   SizedBox(height: isWeb ? 8 : 6),
                                   GestureDetector(
                                     onTap: () => _selectDate(context, false),
@@ -1129,7 +1114,8 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: kButtonColor.withOpacity(0.5)),
+                                          color: kButtonColor.withOpacity(0.5),
+                                        ),
                                         borderRadius: BorderRadius.circular(6),
                                         color: kPrimaryBackgroundTop,
                                       ),
@@ -1147,9 +1133,11 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                               ),
                                             ),
                                           ),
-                                          Icon(Icons.calendar_today,
-                                              size: isWeb ? 16 : 14,
-                                              color: kButtonColor),
+                                          Icon(
+                                            Icons.calendar_today,
+                                            size: isWeb ? 16 : 14,
+                                            color: kButtonColor,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -1164,31 +1152,42 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                       // === DOWNLOAD & APPLY BUTTONS ===
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: isWeb ? 16 : 12),
+                          horizontal: isWeb ? 16 : 12,
+                        ),
                         child: Row(
                           children: [
                             Expanded(
                               child: ElevatedButton.icon(
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: const Text('Downloading report...'),
-                                        backgroundColor: kButtonColor,
-                                      ));
+                                    SnackBar(
+                                      content: const Text(
+                                        'Downloading report...',
+                                      ),
+                                      backgroundColor: kButtonColor,
+                                    ),
+                                  );
                                 },
-                                icon: Icon(Icons.download,
-                                    size: isWeb ? 16 : 14, color: kButtonColor),
-                                label: Text('Download Report',
-                                    style: TextStyle(
-                                        fontSize: isWeb ? 14 : 12,
-                                        color: kButtonColor)),
+                                icon: Icon(
+                                  Icons.download,
+                                  size: isWeb ? 16 : 14,
+                                  color: kButtonColor,
+                                ),
+                                label: Text(
+                                  'Download Report',
+                                  style: TextStyle(
+                                    fontSize: isWeb ? 14 : 12,
+                                    color: kButtonColor,
+                                  ),
+                                ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: kPrimaryBackgroundBottom,
                                   foregroundColor: kButtonColor,
                                   elevation: 0,
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: isWeb ? 16 : 12,
-                                      vertical: isWeb ? 10 : 8),
+                                    horizontal: isWeb ? 16 : 12,
+                                    vertical: isWeb ? 10 : 8,
+                                  ),
                                   side: BorderSide(color: kButtonColor),
                                 ),
                               ),
@@ -1197,36 +1196,38 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  _filteredRecords = _allRecords
-                                      .where((r) {
-                                        final recordDate =
-                                            DateTime.parse(r.date);
-                                        return recordDate
-                                                .isAfter(_fromDate
-                                                    .subtract(
-                                                        const Duration(days: 1))) &&
-                                            recordDate.isBefore(_toDate
-                                                .add(const Duration(days: 1)));
-                                      })
-                                      .toList();
+                                  _filteredRecords = _allRecords.where((r) {
+                                    final recordDate = DateTime.parse(r.date);
+                                    return recordDate.isAfter(
+                                          _fromDate.subtract(
+                                            const Duration(days: 1),
+                                          ),
+                                        ) &&
+                                        recordDate.isBefore(
+                                          _toDate.add(const Duration(days: 1)),
+                                        );
+                                  }).toList();
                                 });
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                      content: const Text('Filters applied!'),
-                                      backgroundColor: kButtonColor,
-                                    ));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Text('Filters applied!'),
+                                    backgroundColor: kButtonColor,
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: kButtonColor,
                                 foregroundColor: kTextColor,
                                 elevation: 0,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: isWeb ? 20 : 16,
-                                    vertical: isWeb ? 10 : 8),
+                                  horizontal: isWeb ? 20 : 16,
+                                  vertical: isWeb ? 10 : 8,
+                                ),
                               ),
-                              child: Text('Apply',
-                                  style: TextStyle(
-                                      fontSize: isWeb ? 14 : 12)),
+                              child: Text(
+                                'Apply',
+                                style: TextStyle(fontSize: isWeb ? 14 : 12),
+                              ),
                             ),
                           ],
                         ),
@@ -1237,7 +1238,8 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                       // === SUMMARY CARDS ===
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: isWeb ? 16 : 12),
+                          horizontal: isWeb ? 16 : 12,
+                        ),
                         child: LayoutBuilder(
                           builder: (ctx, constraints) {
                             int cols = isWeb ? 4 : 2;
@@ -1248,32 +1250,60 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                             }
                             return GridView.count(
                               shrinkWrap: true,
-                              physics:
-                                  const NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               crossAxisCount: cols,
                               crossAxisSpacing: isWeb ? 8 : 6,
                               mainAxisSpacing: isWeb ? 8 : 6,
                               childAspectRatio: ratio,
                               children: [
                                 _buildSummaryCard(
-                                    'Active Employees',
-                                    '74',
-                                    kAppBarColor,
-                                    isWeb),
-                                _buildSummaryCard('On Leave', '0',
-                                    kPrimaryBackgroundBottom, isWeb),
-                                _buildSummaryCard('Checked-In', '47',
-                                    kPrimaryBackgroundBottom.withOpacity(0.7), isWeb),
-                                _buildSummaryCard('Absent', '27',
-                                    kPrimaryBackgroundBottom.withOpacity(0.5), isWeb),
-                                _buildSummaryCard('Late Check-In', '4',
-                                    kAppBarColor.withOpacity(0.7), isWeb),
-                                _buildSummaryCard('Field Attendance', '2',
-                                    kPrimaryBackgroundBottom.withOpacity(0.8), isWeb),
-                                _buildSummaryCard('Early Check-Out', '0',
-                                    kPrimaryBackgroundBottom.withOpacity(0.6), isWeb),
-                                _buildSummaryCard('Half Day', '0',
-                                    kAppBarColor.withOpacity(0.6), isWeb),
+                                  'Active Employees',
+                                  '74',
+                                  Color(0xFFB39DDB),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'On Leave',
+                                  '0',
+                                  Color(0xFFD1C4E9),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'Checked-In',
+                                  '47',
+                                  Color(0xFFCE93D8),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'Absent',
+                                  '27',
+                                  Color(0xFFE1BEE7),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'Late Check-In',
+                                  '4',
+                                  Color(0xFFBA68C8),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'Field Attendance',
+                                  '2',
+                                  Color(0xFFF8BBD0),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'Early Check-Out',
+                                  '0',
+                                  Color(0xFFF48FB1),
+                                  isWeb,
+                                ),
+                                _buildSummaryCard(
+                                  'Half Day',
+                                  '0',
+                                  Color(0xFFF06292),
+                                  isWeb,
+                                ),
                               ],
                             );
                           },
@@ -1285,7 +1315,8 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                       // === SEARCH + REGULARIZATION BUTTON ===
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: isWeb ? 16 : 12),
+                          horizontal: isWeb ? 16 : 12,
+                        ),
                         child: Row(
                           children: [
                             Expanded(
@@ -1297,20 +1328,31 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                   onChanged: _searchEmployees,
                                   decoration: InputDecoration(
                                     hintText: 'Search',
-                                    hintStyle: TextStyle(color: kButtonColor.withOpacity(0.6)),
-                                    prefixIcon: Icon(Icons.search,
-                                        size: isWeb ? 20 : 18, color: kButtonColor),
+                                    hintStyle: TextStyle(
+                                      color: kButtonColor.withOpacity(0.6),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      size: isWeb ? 20 : 18,
+                                      color: kButtonColor,
+                                    ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(color: kButtonColor),
+                                      borderSide: BorderSide(
+                                        color: kButtonColor,
+                                      ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(color: kButtonColor.withOpacity(0.5)),
+                                      borderSide: BorderSide(
+                                        color: kButtonColor.withOpacity(0.5),
+                                      ),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(color: kButtonColor),
+                                      borderSide: BorderSide(
+                                        color: kButtonColor,
+                                      ),
                                     ),
                                     isDense: true,
                                     filled: true,
@@ -1327,8 +1369,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) =>
-                                        const AttendanceReport(),
+                                    builder: (_) => const AttendanceReport(),
                                   ),
                                 );
                               },
@@ -1336,12 +1377,14 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                                 backgroundColor: kAppBarColor,
                                 foregroundColor: kTextColor,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: isWeb ? 16 : 12,
-                                    vertical: isWeb ? 12 : 8),
+                                  horizontal: isWeb ? 16 : 12,
+                                  vertical: isWeb ? 12 : 8,
+                                ),
                               ),
-                              child: Text('Limit',
-                                  style: TextStyle(
-                                      fontSize: isWeb ? 15 : 10)),
+                              child: Text(
+                                'Limit',
+                                style: TextStyle(fontSize: isWeb ? 15 : 10),
+                              ),
                             ),
                           ],
                         ),
@@ -1353,151 +1396,156 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                       Container(
                         height: 400,
                         margin: EdgeInsets.symmetric(
-                            horizontal: isWeb ? 16 : 12),
+                          horizontal: isWeb ? 16 : 12,
+                        ),
                         decoration: BoxDecoration(
                           color: kPrimaryBackgroundTop,
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                              color: kButtonColor.withOpacity(0.3)),
+                            color: kButtonColor.withOpacity(0.3),
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            // Header Row
-                            Container(
-                              padding: EdgeInsets.all(isWeb ? 12 : 8),
-                              decoration: BoxDecoration(
-                                color: kPrimaryBackgroundBottom,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8),
-                                ),
-                              ),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    _buildHeaderCell('Employee ID',
-                                        isWeb ? 80 : 70, isWeb),
-                                    _buildHeaderCell('Employee Name',
-                                        isWeb ? 100 : 90, isWeb),
-                                    _buildHeaderCell('Shift',
-                                        isWeb ? 70 : 60, isWeb),
-                                    _buildHeaderCell('Date',
-                                        isWeb ? 80 : 70, isWeb),
-                                    _buildHeaderCell('CheckIn',
-                                        isWeb ? 70 : 60, isWeb),
-                                    _buildHeaderCell('CheckOut',
-                                        isWeb ? 70 : 60, isWeb),
-                                    _buildHeaderCell('Department',
-                                        isWeb ? 80 : 70, isWeb),
-                                    _buildHeaderCell('Attendance',
-                                        isWeb ? 80 : 70, isWeb),
-                                    _buildHeaderCell('Total Worked Hours',
-                                        isWeb ? 90 : 80, isWeb),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            // Data Rows
-                            Expanded(
-                              child: _filteredRecords.isEmpty
-                                  ? Center(
-                                      child: Text(
-                                        'No records found${_selectedFilter.isNotEmpty ? ' for $_selectedFilter' : ''}',
-                                        style: TextStyle(
-                                          fontSize: isWeb ? 14 : 12,
-                                          color: kButtonColor.withOpacity(0.7),
-                                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: SizedBox(
+                            width: isWeb
+                                ? 50
+                                : 925, // adjust based on total width of all columns
+                            child: Column(
+                              children: [
+                                // Header Row
+                                Container(
+                                  padding: EdgeInsets.all(isWeb ? 12 : 8),
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryBackgroundBottom,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                      topRight: Radius.circular(8),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      _buildHeaderCell(
+                                        'Employee ID',
+                                        100,
+                                        isWeb,
                                       ),
-                                    )
-                                  : ListView.builder(
-                                      itemCount:
-                                          _filteredRecords.length,
-                                      itemBuilder: (ctx, i) {
-                                        final r =
-                                            _filteredRecords[i];
-                                        return Container(
-                                          padding: EdgeInsets.all(
-                                              isWeb ? 12 : 8),
-                                          decoration:
-                                              BoxDecoration(
-                                            border: Border(
-                                              bottom:
-                                                  BorderSide(
-                                                color: kPrimaryBackgroundBottom
-                                                    .withOpacity(0.5),
-                                                width: 1,
+                                      _buildHeaderCell(
+                                        'Employee Name',
+                                        120,
+                                        isWeb,
+                                      ),
+                                      _buildHeaderCell('Shift', 80, isWeb),
+                                      _buildHeaderCell('Date', 100, isWeb),
+                                      _buildHeaderCell('CheckIn', 100, isWeb),
+                                      _buildHeaderCell('CheckOut', 100, isWeb),
+                                      _buildHeaderCell(
+                                        'Department',
+                                        100,
+                                        isWeb,
+                                      ),
+                                      _buildHeaderCell(
+                                        'Attendance',
+                                        100,
+                                        isWeb,
+                                      ),
+                                      _buildHeaderCell(
+                                        'Worked Hours',
+                                        100,
+                                        isWeb,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                // Data Rows
+                                Expanded(
+                                  child: _filteredRecords.isEmpty
+                                      ? Center(
+                                          child: Text(
+                                            'No records found${_selectedFilter.isNotEmpty ? ' for $_selectedFilter' : ''}',
+                                            style: TextStyle(
+                                              fontSize: isWeb ? 14 : 12,
+                                              color: kButtonColor.withOpacity(
+                                                0.7,
                                               ),
                                             ),
                                           ),
-                                          child: SingleChildScrollView(
-                                            scrollDirection:
-                                                Axis.horizontal,
-                                            child: Row(
-                                              children: [
-                                                _buildDataCell(
+                                        )
+                                      : ListView.builder(
+                                          itemCount: _filteredRecords.length,
+                                          itemBuilder: (ctx, i) {
+                                            final r = _filteredRecords[i];
+                                            return Container(
+                                              padding: EdgeInsets.all(
+                                                isWeb ? 12 : 8,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    color:
+                                                        kPrimaryBackgroundBottom
+                                                            .withOpacity(0.5),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  _buildDataCell(
                                                     r.employeeId,
-                                                    isWeb
-                                                        ? 80
-                                                        : 70,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.employeeName,
-                                                    isWeb
-                                                        ? 100
-                                                        : 90,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    120,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.shift,
-                                                    isWeb
-                                                        ? 70
-                                                        : 60,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    80,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.date,
-                                                    isWeb
-                                                        ? 80
-                                                        : 70,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.checkIn,
-                                                    isWeb
-                                                        ? 70
-                                                        : 60,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.checkOut,
-                                                    isWeb
-                                                        ? 70
-                                                        : 60,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.department,
-                                                    isWeb
-                                                        ? 80
-                                                        : 70,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.attendance,
-                                                    isWeb
-                                                        ? 80
-                                                        : 70,
-                                                    isWeb),
-                                                _buildDataCell(
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                  _buildDataCell(
                                                     r.workedHours,
-                                                    isWeb
-                                                        ? 90
-                                                        : 80,
-                                                    isWeb),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                                    100,
+                                                    isWeb,
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
 
@@ -1513,8 +1561,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
     );
   }
 
-  Widget _buildHeaderCell(
-      String text, double width, bool isWeb) {
+  Widget _buildHeaderCell(String text, double width, bool isWeb) {
     return SizedBox(
       width: width,
       child: Text(
@@ -1530,24 +1577,24 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
     );
   }
 
-  Widget _buildDataCell(
-      String text, double width, bool isWeb) {
+  Widget _buildDataCell(String text, double width, bool isWeb) {
     return SizedBox(
       width: width,
       child: Text(
         text,
-        style: TextStyle(
-          fontSize: isWeb ? 12 : 10,
-          color: kButtonColor,
-        ),
+        style: TextStyle(fontSize: isWeb ? 12 : 10, color: kButtonColor),
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       ),
     );
   }
 
-  Widget _buildSummaryCard(String title, String count,
-      Color color, bool isWeb) {
+  Widget _buildSummaryCard(
+    String title,
+    String count,
+    Color color,
+    bool isWeb,
+  ) {
     final isSelected = _selectedFilter == title;
     return GestureDetector(
       onTap: () => _onCardTapped(title),
@@ -1556,9 +1603,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),
-          border: isSelected
-              ? Border.all(color: kButtonColor, width: 2)
-              : null,
+          border: isSelected ? Border.all(color: kButtonColor, width: 2) : null,
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -1582,9 +1627,9 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: isWeb ? 9 : 8,
-                  fontWeight: FontWeight.w500,
-                  color: kTextColor,
+                  fontSize: isWeb ? 30 : 12,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 0, 0, 0),
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -1595,9 +1640,9 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
             Text(
               count,
               style: TextStyle(
-                fontSize: isWeb ? 16 : 14,
+                fontSize: isWeb ? 15 : 15,
                 fontWeight: FontWeight.bold,
-                color: kTextColor,
+                color: const Color.fromARGB(234, 24, 24, 24),
               ),
             ),
           ],
