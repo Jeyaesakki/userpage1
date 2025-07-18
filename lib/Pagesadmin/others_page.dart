@@ -190,7 +190,7 @@ class OthersPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                _buildMenuButton(context, 'My Task', onTap: () {
+                _buildMenuButton(context, 'My Tasks', onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const MyTaskPage()),
@@ -217,7 +217,7 @@ class OthersPage extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                _buildMenuButton(context, 'Events Updates', onTap: () {
+                _buildMenuButton(context, 'Event Updates', onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const EventUpdatesPage()),

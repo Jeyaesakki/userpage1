@@ -280,6 +280,7 @@
 //   }
 // }
 
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -352,203 +353,194 @@ class _MyTrackPageState extends State<MyTrackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryBackgroundBottom,
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            
-
-            color: kPrimaryBackgroundTop,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 6,
-                offset: Offset(0, 2),
-              ),
-            ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // Header Bar
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: kAppBarColor,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                  ),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(Icons.arrow_back, color: kTextColor),
-                      ),
-                      const SizedBox(width: 10),
-                      const Text('My Track',
-                          style: TextStyle(
-                            color: kTextColor,
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
-                ),
-
-                // Form Body
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Date
-                      TextFormField(
-                        controller: dateController,
-                        readOnly: true,
-                        onTap: _pickDate,
-                        decoration: InputDecoration(
-                          labelText: "Choose date",
-                          prefixIcon: const Icon(Icons.calendar_today, color: kButtonColor),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: kButtonColor, width: 2),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-
-                      // Shift Dropdown
-                      DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          labelText: "Select shift",
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: kButtonColor, width: 2),
-                          ),
-                        ),
-                        value: selectedShift,
-                        items: shiftOptions.map((shift) {
-                          return DropdownMenuItem(
-                            value: shift,
-                            child: Text(shift),
-                          );
-                        }).toList(),
-                        onChanged: (value) => setState(() => selectedShift = value),
-                      ),
-                      const SizedBox(height: 15),
-
-                      // Description
-                      TextFormField(
-                        controller: descriptionController,
-                        maxLines: 2,
-                        decoration: InputDecoration(
-                          labelText: "Description",
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: kButtonColor, width: 2),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Capture/Upload Labels
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text("Capture image"),
-                          Text("Upload image"),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-
-                      // Buttons
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => _pickImage(ImageSource.camera),
-                              child: Container(
-                                height: 40,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: const Text("📷"),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => _pickImage(ImageSource.gallery),
-                              child: Container(
-                                height: 40,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: const Text("image file"),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 20),
-                      const Text("Map"),
-                      const SizedBox(height: 10),
-
-                      // Image Preview
-                      Container(
-                        height: 100,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey.shade300,
-                        ),
-                        child: selectedImage != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.file(
-                                  selectedImage!,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : const Center(
-                                child: Icon(Icons.image_outlined, color: Colors.black38, size: 40),
-                              ),
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      // Submit Button
-                      ElevatedButton(
-                        onPressed: _submit,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kButtonColor,
-                          minimumSize: const Size(double.infinity, 45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        ),
-                        child: const Text("Submit", style: TextStyle(color: kTextColor)),
-                      ),
-                    ],
-                  ),
+        ),
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: kPrimaryBackgroundTop,
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6,
+                  offset: Offset(0, 2),
                 ),
               ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Header Bar
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: kAppBarColor,
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                    ),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: const Icon(Icons.arrow_back, color: kTextColor),
+                        ),
+                        const SizedBox(width: 10),
+                        const Text('My Track',
+                            style: TextStyle(
+                              color: kTextColor,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ],
+                    ),
+                  ),
+
+                  // Form Body
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          controller: dateController,
+                          readOnly: true,
+                          onTap: _pickDate,
+                          decoration: InputDecoration(
+                            labelText: "Choose date",
+                            prefixIcon: const Icon(Icons.calendar_today, color: kButtonColor),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(color: kButtonColor, width: 2),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            labelText: "Select shift",
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(color: kButtonColor, width: 2),
+                            ),
+                          ),
+                          value: selectedShift,
+                          items: shiftOptions.map((shift) {
+                            return DropdownMenuItem(
+                              value: shift,
+                              child: Text(shift),
+                            );
+                          }).toList(),
+                          onChanged: (value) => setState(() => selectedShift = value),
+                        ),
+                        const SizedBox(height: 15),
+                        TextFormField(
+                          controller: descriptionController,
+                          maxLines: 2,
+                          decoration: InputDecoration(
+                            labelText: "Description",
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(color: kButtonColor, width: 2),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text("Capture image"),
+                            Text("Upload image"),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => _pickImage(ImageSource.camera),
+                                child: Container(
+                                  height: 40,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Text("📷"),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => _pickImage(ImageSource.gallery),
+                                child: Container(
+                                  height: 40,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Text("image file"),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        const Text("Map"),
+                        const SizedBox(height: 10),
+                        Container(
+                          height: 100,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.grey.shade300,
+                          ),
+                          child: selectedImage != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.file(
+                                    selectedImage!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : const Center(
+                                  child: Icon(Icons.image_outlined, color: Colors.black38, size: 40),
+                                ),
+                        ),
+                        const SizedBox(height: 25),
+                        ElevatedButton(
+                          onPressed: _submit,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kButtonColor,
+                            minimumSize: const Size(double.infinity, 45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                          ),
+                          child: const Text("Submit", style: TextStyle(color: kTextColor)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -315,102 +315,144 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryBackgroundBottom,
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      // Top bar
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'SERV',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 23,
-                                color: kAppBarColor,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              kPrimaryBackgroundTop,
+              kPrimaryBackgroundBottom,
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: [
+                        // Top bar
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'SERV',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 23,
+                                  color: kAppBarColor,
+                                ),
                               ),
-                            ),
-                            Row(
-                              children: const [
-                                Icon(Icons.location_on, color: kTextColor),
-                                SizedBox(width: 22),
-                                Icon(Icons.warning, color: kTextColor),
-                                SizedBox(width: 22),
-                                Icon(Icons.person, color: kTextColor),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(height: 3, color: kAppBarColor),
-
-                      const SizedBox(height: 16),
-
-                      Center(
-                        child: Text(
-                          'Hello, $userName',
-                          style: const TextStyle(
-                            color: kTextColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                              Row(
+                                children: const [
+                                  Icon(Icons.location_on, color: Color.fromARGB(255, 12, 8, 8)),
+                                  SizedBox(width: 22),
+                                  Icon(Icons.warning, color: Color.fromARGB(255, 12, 8, 8)),
+                                  SizedBox(width: 22),
+                                  Icon(Icons.person, color: Color.fromARGB(255, 12, 8, 8)),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
+                        Container(height: 3, color: kAppBarColor),
 
-                      const SizedBox(height: 8),
+                        const SizedBox(height: 16),
 
-                      const Center(
-                        child: Text(
-                          'With SERV, You Deserve the Best',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                        Center(
+                          child: Text(
+                            'Hello, $userName',
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 22, 20, 20),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
-                      ),
 
-                      const SizedBox(height: 8),
+                        const SizedBox(height: 8),
 
-                      // Image
-                      SizedBox(
-                        height: 200,
-                        width: 200,
-                        child: Image.asset('assets/images/attendance-management.png'),
-                      ),
+                        const Center(
+                          child: Text(
+                            'With SERV, You Deserve the Best',
+                            style: TextStyle(
+                              color: kAppBarColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
 
-                      const SizedBox(height: 3),
+                        const SizedBox(height: 8),
 
-                      // Attendance and Emergency Buttons
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Attendance
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const AttendancePage(),
+                        SizedBox(
+                          height: 200,
+                          width: 200,
+                          child: Image.asset('assets/images/attendance-management.png'),
+                        ),
+
+                        const SizedBox(height: 3),
+
+                        // Attendance and Emergency Buttons
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Attendance
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const AttendancePage(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryBackgroundBottom,
+                                    borderRadius: BorderRadius.circular(18),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 5,
+                                        offset: Offset(2, 2),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
-                              child: Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.calendar_month, size: 50, color: kAppBarColor),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        'Attendance',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              // Emergency
+                              Container(
                                 width: 100,
                                 height: 100,
                                 decoration: BoxDecoration(
-                                  color: kPrimaryBackgroundBottom,
+                                  color: Colors.red[100],
                                   borderRadius: BorderRadius.circular(18),
                                   boxShadow: const [
                                     BoxShadow(
@@ -423,10 +465,11 @@ class HomeScreen extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                    Icon(Icons.calendar_month, size: 50, color: kAppBarColor),
+                                    Icon(Icons.touch_app, size: 50, color: Colors.redAccent),
                                     SizedBox(height: 8),
                                     Text(
-                                      'Attendance',
+                                      'Emergency\nButton',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -435,96 +478,64 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ),
-
-                            // Emergency
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Colors.red[100],
-                                borderRadius: BorderRadius.circular(18),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 5,
-                                    offset: Offset(2, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.touch_app, size: 50, color: Colors.redAccent),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    'Emergency\nButton',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      // ✅ My Serv Button (updated)
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const MyServPage()),
-                          );
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: kButtonColor,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6,
-                                offset: Offset(2, 3),
-                              ),
                             ],
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                'My Serv',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // My Serv Button
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => const MyServPage()),
+                            );
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: kButtonColor,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 6,
+                                  offset: Offset(2, 3),
                                 ),
-                              ),
-                              SizedBox(width: 8),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 20,
-                              )
-                            ],
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'My Serv',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 20,
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
 
-                      const Spacer(),
-                    ],
+                        const Spacer(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
 
@@ -543,7 +554,6 @@ class HomeScreen extends StatelessWidget {
           children: [
             BottomNavItem(icon: Icons.home, label: 'Home'),
 
-            // Profile
             BottomNavItem(
               icon: Icons.person,
               label: 'Profile',
@@ -596,3 +606,4 @@ class BottomNavItem extends StatelessWidget {
     );
   }
 }
+

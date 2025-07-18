@@ -527,6 +527,9 @@
 //     );
 //   }
 // }
+
+
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:serv_app/Pagesusers/face_rec_page.dart';
@@ -594,135 +597,147 @@ class _AttendancePageState extends State<AttendancePage> {
     final seconds = _elapsedSeconds % 60;
 
     return Scaffold(
-      backgroundColor: kPrimaryBackgroundBottom,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  const Text(
-                    "Attendance",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-
-              // Profile Card
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: kPrimaryBackgroundTop,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              kPrimaryBackgroundTop,
+              kPrimaryBackgroundBottom,
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 3),
-                    Text("$id / $role", style: const TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 3),
-                    Row(
-                      children: [
-                        const Icon(Icons.calendar_today, size: 14),
-                        const SizedBox(width: 5),
-                        Text(formattedDate, style: const TextStyle(fontSize: 13)),
-                      ],
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "Attendance",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 8),
 
-              SizedBox(
-                height: 40,
-                width: 40,
-                child: Image.asset('assets/images/clock.png'),
-              ),
-              const SizedBox(height: 8),
-
-              // Timer Display
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _timeField(_format(hours)),
-                  const SizedBox(width: 6),
-                  _timeField(_format(minutes)),
-                  const SizedBox(width: 6),
-                  _timeField(_format(seconds)),
-                  const SizedBox(width: 6),
-                  const Text("Hrs", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Shift Button
-              ElevatedButton.icon(
-                onPressed: isCheckedIn
-                    ? null
-                    : () {
-                        setState(() {
-                          isShiftSelected = true;
-                        });
-                      },
-                icon: const Icon(Icons.schedule, size: 18),
-                label: const Text("Shift 1", style: TextStyle(fontSize: 14)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kButtonColor,
-                  foregroundColor: kTextColor,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Action Buttons
-              Wrap(
-                spacing: 12,
-                runSpacing: 10,
-                alignment: WrapAlignment.center,
-                children: [
-                  _actionButton(Icons.face, "Face Detection", Colors.teal, () {
-                    if (!isShiftSelected) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Please select Shift 1 before Face Detection.")),
-                      );
-                      return;
-                    }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => FaceRecPage(onFaceDetected: _startTimer),
+                // Profile Card
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: kPrimaryBackgroundTop,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 3),
+                      Text("$id / $role", style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 3),
+                      Row(
+                        children: [
+                          const Icon(Icons.calendar_today, size: 14),
+                          const SizedBox(width: 5),
+                          Text(formattedDate, style: const TextStyle(fontSize: 13)),
+                        ],
                       ),
-                    );
-                  }),
-                  !isCheckedIn
-                      ? ElevatedButton.icon(
-                          onPressed: isShiftSelected ? _startTimer : null,
-                          icon: const Icon(Icons.check_circle_outline, size: 18),
-                          label: const Text("Check In", style: TextStyle(fontSize: 13)),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isShiftSelected ? Colors.teal : Colors.grey,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          ),
-                        )
-                      : _actionButton(Icons.logout, "Check Out", Colors.red, _stopTimer),
-                ],
-              ),
-            ],
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Image.asset('assets/images/clock.png'),
+                ),
+                const SizedBox(height: 8),
+
+                // Timer Display
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _timeField(_format(hours)),
+                    const SizedBox(width: 6),
+                    _timeField(_format(minutes)),
+                    const SizedBox(width: 6),
+                    _timeField(_format(seconds)),
+                    const SizedBox(width: 6),
+                    const Text("Hrs", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Shift Button
+                ElevatedButton.icon(
+                  onPressed: isCheckedIn
+                      ? null
+                      : () {
+                          setState(() {
+                            isShiftSelected = true;
+                          });
+                        },
+                  icon: const Icon(Icons.schedule, size: 18),
+                  label: const Text("Shift 1", style: TextStyle(fontSize: 14)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kButtonColor,
+                    foregroundColor: kTextColor,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Action Buttons
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 10,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _actionButton(Icons.face, "Face Detection", Colors.teal, () {
+                      if (!isShiftSelected) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Please select Shift 1 before Face Detection.")),
+                        );
+                        return;
+                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => FaceRecPage(onFaceDetected: _startTimer),
+                        ),
+                      );
+                    }),
+                    !isCheckedIn
+                        ? ElevatedButton.icon(
+                            onPressed: isShiftSelected ? _startTimer : null,
+                            icon: const Icon(Icons.check_circle_outline, size: 18),
+                            label: const Text("Check In", style: TextStyle(fontSize: 13)),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isShiftSelected ? Colors.teal : Colors.grey,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            ),
+                          )
+                        : _actionButton(Icons.logout, "Check Out", Colors.red, _stopTimer),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

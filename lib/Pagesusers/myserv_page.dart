@@ -1,5 +1,4 @@
 
-
 // import 'package:flutter/material.dart';
 // import 'package:serv_app/Pagesusers/attendance_model_page.dart';
 // import 'package:serv_app/Pagesusers/my_attendance_page.dart';
@@ -38,13 +37,13 @@
 //           ),
 //         ),
 //         child: GridView.count(
-//           crossAxisCount: 2, // Now 3 boxes in a row
-//           childAspectRatio: 1.50, // Shorter and narrower
+//           crossAxisCount: 2,
+//           childAspectRatio: 1.5,
 //           mainAxisSpacing: 10,
 //           crossAxisSpacing: 10,
 //           children: [
 //             _ServItem(
-//               icon: Icons.how_to_reg,
+//               imagePath: 'assets/images/attendance.png',
 //               label: "Attendance",
 //               onTap: () {
 //                 Navigator.push(
@@ -81,24 +80,48 @@
 //                 );
 //               },
 //             ),
-//             _ServItem(icon: Icons.track_changes, label: "My Track", onTap: () {
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => const MyTrackPage()));
-//             }),
-//             _ServItem(icon: Icons.request_page, label: "My Request", onTap: () {
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => const MyRequestPage()));
-//             }),
-//             _ServItem(icon: Icons.category, label: "Type of Request", onTap: () {
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => const TypeOfRequestPage()));
-//             }),
-//             _ServItem(icon: Icons.task, label: "My Task", onTap: () {
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => const MyTasksPage()));
-//             }),
-//             _ServItem(icon: Icons.event, label: "Events Update", onTap: () {
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => const EventUpdatesPage()));
-//             }),
-//             _ServItem(icon: Icons.redeem, label: "Rewards", onTap: () {
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => const MyRewardsPage()));
-//             }),
+//             _ServItem(
+//               imagePath: 'assets/images/my-track.png',
+//               label: "My Track",
+//               onTap: () {
+//                 Navigator.push(context, MaterialPageRoute(builder: (_) => const MyTrackPage()));
+//               },
+//             ),
+//             _ServItem(
+//               imagePath: 'assets/images/my-request.png',
+//               label: "My Request",
+//               onTap: () {
+//                 Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRequestPage()));
+//               },
+//             ),
+//             _ServItem(
+//               imagePath: 'assets/images/type_of_request3.png',
+//               label: "Type of Request",
+//               onTap: () {
+//                 Navigator.push(context, MaterialPageRoute(builder: (_) => const TypeOfRequestPage()));
+//               },
+//             ),
+//             _ServItem(
+//               imagePath: 'assets/images/task5.png',
+//               label: "My Tasks",
+//               onTap: () {
+//                 Navigator.push(context, MaterialPageRoute(builder: (_) => const MyTasksPage()));
+//               },
+//             ),
+//             _ServItem(
+//               imagePath: 'assets/images/event_icon.png',
+//               label: "Event Update",
+//               onTap: () {
+//                 Navigator.push(context, MaterialPageRoute(builder: (_) => const EventUpdatesPage()));
+//               },
+//             ),
+//             _ServItem(
+//               imagePath: 'assets/images/rewards1.png',
+//               label: "Rewards",
+//               onTap: () {
+//                 Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRewardsPage()));
+//               },
+//             ),
 //           ],
 //         ),
 //       ),
@@ -107,16 +130,20 @@
 // }
 
 // class _ServItem extends StatelessWidget {
-//   final IconData icon;
+//   final String imagePath;
 //   final String label;
 //   final VoidCallback? onTap;
 
-//   const _ServItem({required this.icon, required this.label, this.onTap});
+//   const _ServItem({
+//     required this.imagePath,
+//     required this.label,
+//     this.onTap,
+//   });
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Card(
-//       color: kButtonColor.withOpacity(0.9),
+//       color: kAppBarColor.withOpacity(0.9),
 //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
 //       elevation: 2,
 //       child: InkWell(
@@ -127,7 +154,11 @@
 //           child: Column(
 //             mainAxisAlignment: MainAxisAlignment.center,
 //             children: [
-//               Icon(icon, size: 26, color: kTextColor), // Smaller icon
+//               SizedBox(
+//                 height: 45,
+//                 width: 45,
+//                 child: Image.asset(imagePath, fit: BoxFit.contain),
+//               ),
 //               const SizedBox(height: 6),
 //               Text(
 //                 label,
@@ -147,7 +178,6 @@
 // }
 
 
-
 import 'package:flutter/material.dart';
 import 'package:serv_app/Pagesusers/attendance_model_page.dart';
 import 'package:serv_app/Pagesusers/my_attendance_page.dart';
@@ -164,12 +194,96 @@ const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 const Color kAppBarColor = Color(0xFF8C6EAF);
 const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
+const Color kIconColor = Color(0xFF3D0066); // New icon color from your image
 
 class MyServPage extends StatelessWidget {
   const MyServPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final items = [
+      _ServItemData(
+        imagePath: 'assets/images/attendance.png',
+        label: "Attendance",
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyAttendancePage(
+                data: AttendanceData(
+                  totalDays: 13,
+                  presentCount: 11,
+                  absentCount: 2,
+                  leaveCount: 0,
+                  lateCheckIn: 0,
+                  earlyCheckOut: 2,
+                  permissionCount: 0,
+                  presentDates: [
+                    DateTime(2025, 7, 1),
+                    DateTime(2025, 7, 2),
+                    DateTime(2025, 7, 3),
+                    DateTime(2025, 7, 4),
+                    DateTime(2025, 7, 5),
+                    DateTime(2025, 7, 6),
+                    DateTime(2025, 7, 7),
+                    DateTime(2025, 7, 8),
+                    DateTime(2025, 7, 10),
+                    DateTime(2025, 7, 11),
+                  ],
+                  absentDates: [
+                    DateTime(2025, 7, 9),
+                    DateTime(2025, 7, 13),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      _ServItemData(
+        imagePath: 'assets/images/my-track.png',
+        label: "My Track",
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const MyTrackPage()));
+        },
+      ),
+      _ServItemData(
+        imagePath: 'assets/images/my-request.png',
+        label: "My Request",
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRequestPage()));
+        },
+      ),
+      _ServItemData(
+        imagePath: 'assets/images/type_of_request3.png',
+        label: "Type of Request",
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const TypeOfRequestPage()));
+        },
+      ),
+      _ServItemData(
+        imagePath: 'assets/images/task5.png',
+        label: "My Task",
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const MyTasksPage()));
+        },
+      ),
+      _ServItemData(
+        imagePath: 'assets/images/event_icon.png',
+        label: "Events Update",
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const EventUpdatesPage()));
+        },
+      ),
+      _ServItemData(
+        imagePath: 'assets/images/rewards1.png',
+        label: "Rewards",
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRewardsPage()));
+        },
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My SERV', style: TextStyle(color: kTextColor)),
@@ -177,7 +291,6 @@ class MyServPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: kTextColor),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
@@ -185,97 +298,41 @@ class MyServPage extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 1.5,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          children: [
-            _ServItem(
-              imagePath: 'assets/images/attendance.png',
-              label: "Attendance",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyAttendancePage(
-                      data: AttendanceData(
-                        totalDays: 13,
-                        presentCount: 11,
-                        absentCount: 2,
-                        leaveCount: 0,
-                        lateCheckIn: 0,
-                        earlyCheckOut: 2,
-                        permissionCount: 0,
-                        presentDates: [
-                          DateTime(2025, 7, 1),
-                          DateTime(2025, 7, 2),
-                          DateTime(2025, 7, 3),
-                          DateTime(2025, 7, 4),
-                          DateTime(2025, 7, 5),
-                          DateTime(2025, 7, 6),
-                          DateTime(2025, 7, 7),
-                          DateTime(2025, 7, 8),
-                          DateTime(2025, 7, 10),
-                          DateTime(2025, 7, 11),
-                        ],
-                        absentDates: [
-                          DateTime(2025, 7, 9),
-                          DateTime(2025, 7, 13),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+          child: GridView.builder(
+            itemCount: items.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.1,
             ),
-            _ServItem(
-              imagePath: 'assets/images/my-track.png',
-              label: "My Track",
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const MyTrackPage()));
-              },
-            ),
-            _ServItem(
-              imagePath: 'assets/images/my-request.png',
-              label: "My Request",
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRequestPage()));
-              },
-            ),
-            _ServItem(
-              imagePath: 'assets/images/type_of_request3.png',
-              label: "Type of Request",
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const TypeOfRequestPage()));
-              },
-            ),
-            _ServItem(
-              imagePath: 'assets/images/task5.png',
-              label: "My Task",
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const MyTasksPage()));
-              },
-            ),
-            _ServItem(
-              imagePath: 'assets/images/event_icon.png',
-              label: "Events Update",
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const EventUpdatesPage()));
-              },
-            ),
-            _ServItem(
-              imagePath: 'assets/images/rewards1.png',
-              label: "Rewards",
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRewardsPage()));
-              },
-            ),
-          ],
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return _ServItem(
+                imagePath: item.imagePath,
+                label: item.label,
+                onTap: item.onTap,
+              );
+            },
+          ),
         ),
       ),
     );
   }
+}
+
+class _ServItemData {
+  final String imagePath;
+  final String label;
+  final VoidCallback onTap;
+
+  _ServItemData({
+    required this.imagePath,
+    required this.label,
+    required this.onTap,
+  });
 }
 
 class _ServItem extends StatelessWidget {
@@ -293,29 +350,35 @@ class _ServItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: kAppBarColor.withOpacity(0.9),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 2,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 45,
-                width: 45,
-                child: Image.asset(imagePath, fit: BoxFit.contain),
+                height: 36,
+                width: 36,
+                child: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                    kIconColor, // Updated icon color here
+                    BlendMode.srcIn,
+                  ),
+                  child: Image.asset(imagePath, fit: BoxFit.contain),
+                ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Text(
                 label,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: kTextColor,
                   fontWeight: FontWeight.w600,
-                  fontSize: 11,
+                  fontSize: 10.5,
                 ),
               ),
             ],

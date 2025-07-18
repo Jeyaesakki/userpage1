@@ -210,8 +210,15 @@
 //     );
 //   }
 // }
+
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+// Theme Colors
+const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+const Color kAppBarColor = Color(0xFF8C6EAF);
 
 class PermissionsPage extends StatefulWidget {
   const PermissionsPage({Key? key}) : super(key: key);
@@ -241,7 +248,6 @@ class _PermissionsPageState extends State<PermissionsPage> with WidgetsBindingOb
     super.dispose();
   }
 
-  // Called when app is resumed
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -266,7 +272,7 @@ class _PermissionsPageState extends State<PermissionsPage> with WidgetsBindingOb
     if (result.isPermanentlyDenied) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Permission permanently denied. Please enable from settings."),
+          content: const Text("Permission permanently denied. Please enable from settings."),
           action: SnackBarAction(
             label: "Open Settings",
             onPressed: () => openAppSettings(),
@@ -307,27 +313,37 @@ class _PermissionsPageState extends State<PermissionsPage> with WidgetsBindingOb
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8EFF4), // optional soft pink background
       appBar: AppBar(
         title: const Text("Permissions"),
         centerTitle: true,
+        backgroundColor: kAppBarColor,
       ),
-      
-      body: ListView(
-        children: [
-          const SizedBox(height: 16),
-          _buildPermissionTile(Permission.location, "Location Permission"),
-          _buildPermissionTile(Permission.camera, "Camera Permission"),
-          _buildPermissionTile(Permission.activityRecognition, "Activity Recognition"),
-          _buildPermissionTile(Permission.notification, "Notification Permission"),
-          const SizedBox(height: 24),
-          Center(
-            child: ElevatedButton(
-              onPressed: _checkAllPermissions,
-              child: const Text("Check Again"),
-            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-        ],
+        ),
+        child: ListView(
+          children: [
+            const SizedBox(height: 16),
+            _buildPermissionTile(Permission.location, "Location Permission"),
+            _buildPermissionTile(Permission.camera, "Camera Permission"),
+            _buildPermissionTile(Permission.activityRecognition, "Activity Recognition"),
+            _buildPermissionTile(Permission.notification, "Notification Permission"),
+            const SizedBox(height: 24),
+            Center(
+              child: ElevatedButton(
+                onPressed: _checkAllPermissions,
+                child: const Text("Check Again"),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

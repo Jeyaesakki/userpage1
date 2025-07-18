@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:serv_app/Pagesusers/attendance_model_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-
 
 // Theme Colors
 const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
@@ -11,9 +9,6 @@ const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 const Color kAppBarColor = Color(0xFF8C6EAF);
 const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
-
-
-
 
 class MyAttendancePage extends StatefulWidget {
   final AttendanceData data;
@@ -34,11 +29,7 @@ class _MyAttendancePageState extends State<MyAttendancePage> {
     DateTime today = DateTime.now();
 
     int totalDays = data.presentCount + data.absentCount + data.leaveCount;
-    int totalDaysInMonth = DateUtils.getDaysInMonth(
-      _focusedDay.year,
-      _focusedDay.month,
-    );
-
+    int totalDaysInMonth = DateUtils.getDaysInMonth(_focusedDay.year, _focusedDay.month);
     int remainingDays = totalDaysInMonth - today.day;
 
     return Scaffold(
@@ -50,61 +41,50 @@ class _MyAttendancePageState extends State<MyAttendancePage> {
         ),
         backgroundColor: kAppBarColor,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TotalDaysCard(totalDays: totalDays, remainingDays: remainingDays),
-              const SizedBox(height: 20),
-              SizedBox(height: 370, child: _buildCalendar()),
-              const SizedBox(height: 20),
-              const Text(
-                "Legend",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: _buildLegendFromData([
-                  {
-                    'icon': Icons.circle,
-                    'color': Colors.green,
-                    'label': "Present",
-                  },
-                  {
-                    'icon': Icons.circle,
-                    'color': Colors.red,
-                    'label': "Absent",
-                  },
-                  {
-                    'icon': Icons.airline_seat_individual_suite,
-                    'color': Colors.orange,
-                    'label': "Leave",
-                  },
-                  {
-                    'icon': Icons.beach_access,
-                    'color': Colors.blue,
-                    'label': "Holiday",
-                  },
-                  {
-                    'icon': Icons.nightlight_round,
-                    'color': Colors.purple,
-                    'label': "Week Off",
-                  },
-                  {
-                    'icon': Icons.pedal_bike,
-                    'color': Colors.pink,
-                    'label': "Half Day",
-                  },
-                ]),
-              ),
-              const SizedBox(height: 20),
-              _buildStatusSummary(data),
-              const SizedBox(height: 20),
-              _buildBottomStats(data),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              kPrimaryBackgroundTop,
+              kPrimaryBackgroundBottom,
             ],
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TotalDaysCard(totalDays: totalDays, remainingDays: remainingDays),
+                const SizedBox(height: 20),
+                SizedBox(height: 370, child: _buildCalendar()),
+                const SizedBox(height: 20),
+                const Text(
+                  "Legend",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: _buildLegendFromData([
+                    {'icon': Icons.circle, 'color': Colors.green, 'label': "Present"},
+                    {'icon': Icons.circle, 'color': Colors.red, 'label': "Absent"},
+                    {'icon': Icons.airline_seat_individual_suite, 'color': Colors.orange, 'label': "Leave"},
+                    {'icon': Icons.beach_access, 'color': Colors.blue, 'label': "Holiday"},
+                    {'icon': Icons.nightlight_round, 'color': Colors.purple, 'label': "Week Off"},
+                    {'icon': Icons.pedal_bike, 'color': Colors.pink, 'label': "Half Day"},
+                  ]),
+                ),
+                const SizedBox(height: 20),
+                _buildStatusSummary(data),
+                const SizedBox(height: 20),
+                _buildBottomStats(data),
+              ],
+            ),
           ),
         ),
       ),
@@ -353,6 +333,7 @@ class LegendItem extends StatelessWidget {
     );
   }
 }
+
 
 
 
