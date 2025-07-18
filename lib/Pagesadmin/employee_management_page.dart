@@ -356,15 +356,17 @@
 //   }
 // }
 
+
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'report_scheduler_page.dart'; // Make sure this file exists and is imported
+import 'report_scheduler_page.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Color & style constants
-const Color kPrimaryBackgroundTop    = Color(0xFFFFFFFF); // white
-const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9); // lavender
-const Color kAppBarColor             = Color(0xFF8C6EAF);
+const Color kPrimaryBackgroundTop    = Color(0xFFFFFFFF);
+const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+const Color kAppBarColor             = Color(0xFF655193);
 const Color kButtonColor             = Color(0xFF655193);
 const Color kTextColor               = Colors.white;
 // ─────────────────────────────────────────────────────────────────────────────
@@ -418,8 +420,8 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
 
   Widget statButton(String label, int count, Color color) {
     return SizedBox(
-      width: 100,
-      height: 40,
+      width: 85,
+      height: 30,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
@@ -433,7 +435,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
         child: Text(
           '$label $count',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: 11),
         ),
       ),
     );
@@ -447,12 +449,11 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Make the scaffold transparent so our gradient shows through
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         toolbarHeight: 50,
         backgroundColor: kAppBarColor,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, size: 18),
           onPressed: () {},
@@ -462,10 +463,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
           "Employee Management",
           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
         ),
-      
       ),
-
-      // Wrap body in a Container with vertical gradient
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -480,11 +478,9 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
         child: Column(
           children: [
             const SizedBox(height: 10),
-
-            // Status summary buttons
             Wrap(
-              spacing: 10,
-              runSpacing: 10,
+              spacing: 8,
+              runSpacing: 8,
               alignment: WrapAlignment.center,
               children: [
                 statButton('Total',     employees.length,             kButtonColor),
@@ -494,10 +490,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                 statButton('Relived',   countStatus('Relived'),       kButtonColor),
               ],
             ),
-
             const SizedBox(height: 10),
-
-            // Action buttons: Create Employee & Create Scheduler
             Column(
               children: [
                 ElevatedButton(
@@ -516,12 +509,12 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kButtonColor,
                     foregroundColor: kTextColor,
-                    minimumSize: const Size(160, 48),
+                    minimumSize: const Size(120, 36),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Text("Create Employee"),
+                  child: const Text("Create Employee", style: TextStyle(fontSize: 12)),
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
@@ -534,17 +527,15 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kButtonColor,
                     foregroundColor: kTextColor,
-                    minimumSize: const Size(160, 48),
+                    minimumSize: const Size(120, 36),
                     shape:  RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Text("Create Scheduler"),
+                  child: const Text("Create Scheduler", style: TextStyle(fontSize: 12)),
                 ),
               ],
             ),
-
-            // Search field
             Padding(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -561,24 +552,20 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                 ),
               ),
             ),
-
-            // Table header
             Container(
               color: Colors.grey[300],
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               child: Row(
                 children: const [
-                  Expanded(child: Text("ID",       style: TextStyle(fontWeight: FontWeight.bold))),
-                  Expanded(child: Text("Name",     style: TextStyle(fontWeight: FontWeight.bold))),
-                  Expanded(child: Text("Location", style: TextStyle(fontWeight: FontWeight.bold))),
-                  Expanded(child: Text("Mobile",   style: TextStyle(fontWeight: FontWeight.bold))),
-                  Expanded(child: Text("Status",   style: TextStyle(fontWeight: FontWeight.bold))),
-                  SizedBox(width: 40),
+                  Expanded(flex: 2, child: Text("ID",       style: TextStyle(fontWeight: FontWeight.bold)) ),
+                  Expanded(flex: 3, child: Text("Name",     style: TextStyle(fontWeight: FontWeight.bold)) ),
+                  Expanded(flex: 4, child: Text("Location", style: TextStyle(fontWeight: FontWeight.bold)) ),
+                  Expanded(flex: 4, child: Text("Mobile",   style: TextStyle(fontWeight: FontWeight.bold)) ),
+                  Expanded(flex: 3, child: Text("Status",   style: TextStyle(fontWeight: FontWeight.bold)) ),
+                  SizedBox(width: 30),
                 ],
               ),
             ),
-
-            // Employee list
             Expanded(
               child: ListView.builder(
                 itemCount: filtered.length,
@@ -589,11 +576,11 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                     child: Row(
                       children: [
-                        rowText(e.id),
-                        rowText(e.name),
-                        rowText(e.location),
-                        rowText(e.mobile),
-                        rowText(e.status),
+                        Expanded(flex: 2, child: Text(e.id, softWrap: false, overflow: TextOverflow.ellipsis)),
+                        Expanded(flex: 3, child: Text(e.name, softWrap: false, overflow: TextOverflow.ellipsis)),
+                        Expanded(flex: 4, child: Text(e.location, softWrap: false, overflow: TextOverflow.ellipsis)),
+                        Expanded(flex: 4, child: Text(e.mobile, softWrap: false, overflow: TextOverflow.ellipsis)),
+                        Expanded(flex: 3, child: Text(e.status, softWrap: false, overflow: TextOverflow.ellipsis)),
                         IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () {
@@ -645,6 +632,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
           if (v == null || v.trim().isEmpty) return 'Required';
           if (label == "Email") {
             final emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+
             if (!emailRegex.hasMatch(v.trim())) return 'Enter valid email';
           }
           return null;
@@ -686,8 +674,8 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Create Employee", style: TextStyle(fontSize: 16)),
-        backgroundColor: Colors.blue[100],
-        foregroundColor: Colors.black,
+        backgroundColor: kAppBarColor,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -713,7 +701,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
                   validator: (phone) {
                     if (phone == null || phone.number.isEmpty) {
                       return 'Required';
-                    } else if (!RegExp(r'^\d+$').hasMatch(phone.number)) {
+                    } else if (!RegExp(r'^\\d+\$').hasMatch(phone.number)) {
                       return 'Only digits allowed';
                     }
                     return null;

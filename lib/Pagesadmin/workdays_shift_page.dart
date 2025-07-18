@@ -464,7 +464,7 @@ class _WorkdaysShiftPageState extends State<WorkdaysShiftPage> {
   void _navigateToCreateShift(BuildContext context) async {
     final result = await Navigator.push<Map<String, String>>(
       context,
-      MaterialPageRoute(builder: (context) => const CreateShiftPage()),
+      MaterialPageRoute(builder: (context) => CreateShiftPage()),
     );
 
     if (result != null) {

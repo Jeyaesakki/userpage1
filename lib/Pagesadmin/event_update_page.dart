@@ -232,7 +232,7 @@ class _EventUpdatesPageState extends State<EventUpdatesPage> {
             onPressed: () async {
               await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AddEventPage()),
+                MaterialPageRoute(builder: (context) => const EventUploadPage()),
               );
               setState(() {}); // Refresh on return
             },
