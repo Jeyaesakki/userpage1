@@ -1,4 +1,14 @@
+
+
+
+
 // import 'package:flutter/material.dart';
+// import 'package:serv_app/Pagesadmin/AddGroupNameDialog.dart';
+
+// // Optional: move these to your theme file
+// const Color kAppBarColor = Color(0xFF8C6EAF);
+// const Color kButtonColor = Color(0xFF655193);
+// const Color kTextColor = Colors.white;
 
 // class CreateShiftPage extends StatefulWidget {
 //   const CreateShiftPage({super.key});
@@ -15,7 +25,7 @@
 //   TimeOfDay? _endTime;
 
 //   bool _extraTimeManagement = false;
-//   String? _breakConfig; // "Define" or "Flexible"
+//   String? _breakConfig;
 
 //   Future<void> _pickTime(bool isStart) async {
 //     final picked = await showTimePicker(
@@ -59,7 +69,7 @@
 //       const SnackBar(content: Text("Shift created successfully")),
 //     );
 
-//     Navigator.pop(context, shiftData); // 🔥 Send data back to previous screen
+//     Navigator.pop(context, shiftData);
 //   }
 
 //   void _openGroupNameDialog() async {
@@ -78,257 +88,144 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
+//       resizeToAvoidBottomInset: true,
 //       appBar: AppBar(
+//         backgroundColor: kAppBarColor,
 //         title: const Text("Create Shift"),
 //         leading: IconButton(
 //           icon: const Icon(Icons.arrow_back),
 //           onPressed: () => Navigator.pop(context),
 //         ),
 //       ),
-//       body: SingleChildScrollView(
-//         padding: const EdgeInsets.all(16),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             const Text("Shift Name *", style: TextStyle(fontWeight: FontWeight.bold)),
-//             const SizedBox(height: 6),
-//             TextField(
-//               controller: _shiftNameController,
-//               decoration: const InputDecoration(
-//                 hintText: "Shift Name",
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             const SizedBox(height: 16),
-//             Row(
+//       body: SafeArea(
+//         child: GestureDetector(
+//           onTap: () => FocusScope.of(context).unfocus(),
+//           child: SingleChildScrollView(
+//             padding: const EdgeInsets.all(16),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
 //               children: [
-//                 Expanded(
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       const Text("Start Time *", style: TextStyle(fontWeight: FontWeight.bold)),
-//                       const SizedBox(height: 6),
-//                       ElevatedButton(
-//                         onPressed: () => _pickTime(true),
-//                         child: Text(
-//                           _startTime == null
-//                               ? "Start Time"
-//                               : _startTime!.format(context),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//                 const SizedBox(width: 12),
-//                 Expanded(
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       const Text("End Time *", style: TextStyle(fontWeight: FontWeight.bold)),
-//                       const SizedBox(height: 6),
-//                       ElevatedButton(
-//                         onPressed: () => _pickTime(false),
-//                         child: Text(
-//                           _endTime == null
-//                               ? "End Time"
-//                               : _endTime!.format(context),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             const SizedBox(height: 16),
-//             const Text("Group Name *", style: TextStyle(fontWeight: FontWeight.bold)),
-//             const SizedBox(height: 6),
-//             GestureDetector(
-//               onTap: _openGroupNameDialog,
-//               child: AbsorbPointer(
-//                 child: TextField(
-//                   controller: _groupNameController,
+//                 // Shift Name
+                
+//                 const SizedBox(height: 6),
+//                 TextField(
+//                   controller: _shiftNameController,
 //                   decoration: const InputDecoration(
-//                     hintText: "Shift Group Name",
+//                     labelText: "Shift Name",
+                   
 //                     border: OutlineInputBorder(),
-//                     suffixIcon: Icon(Icons.arrow_drop_down),
 //                   ),
 //                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 16),
-//             CheckboxListTile(
-//               contentPadding: EdgeInsets.zero,
-//               title: const Text("Extra Time Management", style: TextStyle(fontWeight: FontWeight.bold)),
-//               value: _extraTimeManagement,
-//               onChanged: (value) {
-//                 setState(() {
-//                   _extraTimeManagement = value!;
-//                 });
-//               },
-//             ),
-//             const SizedBox(height: 10),
-//             const Text("Break Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
-//             Row(
-//               children: [
-//                 Radio<String>(
-//                   value: "Define",
-//                   groupValue: _breakConfig,
-//                   onChanged: (value) => setState(() => _breakConfig = value),
+//                 const SizedBox(height: 16),
+
+//                 // Time Pickers
+//                 Row(
+//                   children: [
+//                     Expanded(
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const Text("Start Time", style: TextStyle(fontWeight: FontWeight.bold)),
+//                           const SizedBox(height: 6),
+//                           ElevatedButton(
+//                             style: ElevatedButton.styleFrom(backgroundColor: kButtonColor),
+//                             onPressed: () => _pickTime(true),
+//                             child: Text(
+//                               _startTime == null ? "Start Time" : _startTime!.format(context),
+//                               style: const TextStyle(color: kTextColor),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     const SizedBox(width: 12),
+//                     Expanded(
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           const Text("End Time", style: TextStyle(fontWeight: FontWeight.bold)),
+//                           const SizedBox(height: 6),
+//                           ElevatedButton(
+//                             style: ElevatedButton.styleFrom(backgroundColor: kButtonColor),
+//                             onPressed: () => _pickTime(false),
+//                             child: Text(
+//                               _endTime == null ? "End Time" : _endTime!.format(context),
+//                               style: const TextStyle(color: kTextColor),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
 //                 ),
-//                 const Text("Define Break"),
-//                 const SizedBox(width: 20),
-//                 Radio<String>(
-//                   value: "Flexible",
-//                   groupValue: _breakConfig,
-//                   onChanged: (value) => setState(() => _breakConfig = value),
+//                 const SizedBox(height: 16),
+
+//                 // Group Name
+                
+//                 const SizedBox(height: 6),
+//                 GestureDetector(
+//                   onTap: _openGroupNameDialog,
+//                   child: AbsorbPointer(
+//                     child: TextField(
+//                       controller: _groupNameController,
+//                       decoration: const InputDecoration(
+//                         labelText: "Group Name",
+//                         hintText: "Shift Group Name",
+//                         border: OutlineInputBorder(),
+//                         suffixIcon: Icon(Icons.arrow_drop_down),
+//                       ),
+//                     ),
+//                   ),
 //                 ),
-//                 const Text("Flexible Break"),
+//                 const SizedBox(height: 16),
+
+//                 // Checkbox
+//                 CheckboxListTile(
+//                   contentPadding: EdgeInsets.zero,
+//                   title: const Text("Extra Time Management", style: TextStyle(fontWeight: FontWeight.bold)),
+//                   value: _extraTimeManagement,
+//                   onChanged: (value) {
+//                     setState(() {
+//                       _extraTimeManagement = value!;
+//                     });
+//                   },
+//                 ),
+//                 const SizedBox(height: 10),
+
+//                 // Radio
+//                 const Text("Break Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
+//                 Row(
+//                   children: [
+//                     Radio<String>(
+//                       value: "Define",
+//                       groupValue: _breakConfig,
+//                       onChanged: (value) => setState(() => _breakConfig = value),
+//                     ),
+//                     const Text("Define Break"),
+//                     const SizedBox(width: 20),
+//                     Radio<String>(
+//                       value: "Flexible",
+//                       groupValue: _breakConfig,
+//                       onChanged: (value) => setState(() => _breakConfig = value),
+//                     ),
+//                     const Text("Flexible Break"),
+//                   ],
+//                 ),
+//                 const SizedBox(height: 24),
+
+//                 // Submit
+//                 Center(
+//                   child: ElevatedButton(
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: kButtonColor,
+//                       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+//                     ),
+//                     onPressed: _submitForm,
+//                     child: const Text("Submit", style: TextStyle(color: kTextColor)),
+//                   ),
+//                 ),
 //               ],
 //             ),
-//             const SizedBox(height: 24),
-//             Center(
-//               child: ElevatedButton(
-//                 onPressed: _submitForm,
-//                 child: const Text("Submit"),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class AddGroupNameDialog extends StatefulWidget {
-//   const AddGroupNameDialog({super.key});
-
-//   @override
-//   State<AddGroupNameDialog> createState() => _AddGroupNameDialogState();
-// }
-
-// class _AddGroupNameDialogState extends State<AddGroupNameDialog> {
-//   final TextEditingController _groupNameController = TextEditingController();
-//   final List<String> _groupList = [
-//     "PY Shift 2",
-//     "GDC Shift 1",
-//     "General Shift 2",
-//     "Shift",
-//     "General Shift",
-//   ];
-
-//   void _deleteGroup(int index) {
-//     setState(() {
-//       _groupList.removeAt(index);
-//     });
-//   }
-
-//   void _editGroup(int index) {
-//     _groupNameController.text = _groupList[index];
-//     _deleteGroup(index);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Dialog(
-//       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//       child: ConstrainedBox(
-//         constraints: const BoxConstraints(maxHeight: 500),
-//         child: SingleChildScrollView(
-//           padding: const EdgeInsets.all(16),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   const Text(
-//                     "Add Group Name",
-//                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-//                   ),
-//                   IconButton(
-//                     icon: const Icon(Icons.close),
-//                     onPressed: () => Navigator.pop(context),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 10),
-//               Align(
-//                 alignment: Alignment.centerLeft,
-//                 child: const Text(
-//                   "Group Name *",
-//                   style: TextStyle(fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//               const SizedBox(height: 6),
-//               TextField(
-//                 controller: _groupNameController,
-//                 decoration: const InputDecoration(
-//                   hintText: "Group name",
-//                   border: OutlineInputBorder(),
-//                 ),
-//               ),
-//               const SizedBox(height: 14),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   ElevatedButton(
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: Colors.grey.shade300,
-//                     ),
-//                     onPressed: () => Navigator.pop(context),
-//                     child: const Text(
-//                       "Cancel",
-//                       style: TextStyle(color: Colors.black),
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: Colors.teal,
-//                     ),
-//                     onPressed: () {
-//                       final selected = _groupNameController.text.trim();
-//                       if (selected.isNotEmpty) {
-//                         Navigator.pop(context, selected);
-//                       }
-//                     },
-//                     child: const Text("ADD"),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 20),
-//               Container(
-//                 width: double.infinity,
-//                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey.shade200,
-//                   borderRadius: BorderRadius.circular(10),
-//                 ),
-//                 child: const Text(
-//                   "Group Name",
-//                   style: TextStyle(fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//               const SizedBox(height: 10),
-//               ListView.builder(
-//                 shrinkWrap: true,
-//                 physics: const NeverScrollableScrollPhysics(),
-//                 itemCount: _groupList.length,
-//                 itemBuilder: (context, index) {
-//                   final name = _groupList[index];
-//                   return ListTile(
-//                     dense: true,
-//                     title: Text(name),
-//                     leading: const Icon(Icons.edit, size: 18),
-//                     trailing: IconButton(
-//                       icon: const Icon(Icons.delete, size: 18),
-//                       onPressed: () => _deleteGroup(index),
-//                     ),
-//                     onTap: () => _editGroup(index),
-//                   );
-//                 },
-//               ),
-//             ],
 //           ),
 //         ),
 //       ),
@@ -337,8 +234,15 @@
 // }
 
 
-
 import 'package:flutter/material.dart';
+import 'package:serv_app/Pagesadmin/AddGroupNameDialog.dart';
+
+// App-wide theme colors
+const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF); // White
+const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9); // Light purple
+const Color kAppBarColor = Color(0xFF8C6EAF);
+const Color kButtonColor = Color(0xFF655193);
+const Color kTextColor = Colors.white;
 
 class CreateShiftPage extends StatefulWidget {
   const CreateShiftPage({super.key});
@@ -418,8 +322,9 @@ class _CreateShiftPageState extends State<CreateShiftPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: kAppBarColor,
         title: const Text("Create Shift"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -429,110 +334,140 @@ class _CreateShiftPageState extends State<CreateShiftPage> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Shift Name *", style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 6),
-                TextField(
-                  controller: _shiftNameController,
-                  decoration: const InputDecoration(
-                    hintText: "Shift Name",
-                    border: OutlineInputBorder(),
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+              ),
+            ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 6),
+                  TextField(
+                    controller: _shiftNameController,
+                    decoration: const InputDecoration(
+                      labelText: "Shift Name",
+                      hintText: "Shift Name",
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("Start Time *", style: TextStyle(fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 6),
-                          ElevatedButton(
-                            onPressed: () => _pickTime(true),
-                            child: Text(
-                              _startTime == null ? "Start Time" : _startTime!.format(context),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Start Time", style: TextStyle(fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 6),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: kButtonColor),
+                              onPressed: () => _pickTime(true),
+                              child: Text(
+                                _startTime == null ? "Start Time" : _startTime!.format(context),
+                                style: const TextStyle(color: kTextColor),
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("End Time", style: TextStyle(fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 6),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: kButtonColor),
+                              onPressed: () => _pickTime(false),
+                              child: Text(
+                                _endTime == null ? "End Time" : _endTime!.format(context),
+                                style: const TextStyle(color: kTextColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const SizedBox(height: 6),
+                  GestureDetector(
+                    onTap: _openGroupNameDialog,
+                    child: AbsorbPointer(
+                      child: TextField(
+                        controller: _groupNameController,
+                        decoration: const InputDecoration(
+                          labelText: "Group Name",
+                          hintText: "Shift Group Name",
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.arrow_drop_down),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text("Extra Time Management", style: TextStyle(fontWeight: FontWeight.bold)),
+                    value: _extraTimeManagement,
+                    onChanged: (value) {
+                      setState(() {
+                        _extraTimeManagement = value!;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  const Text("Break Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 6),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 10,
+                    runSpacing: 8,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Radio<String>(
+                            value: "Define",
+                            groupValue: _breakConfig,
+                            onChanged: (value) => setState(() => _breakConfig = value),
                           ),
+                          const Text("Define Break"),
                         ],
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("End Time *", style: TextStyle(fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 6),
-                          ElevatedButton(
-                            onPressed: () => _pickTime(false),
-                            child: Text(
-                              _endTime == null ? "End Time" : _endTime!.format(context),
-                            ),
+                          Radio<String>(
+                            value: "Flexible",
+                            groupValue: _breakConfig,
+                            onChanged: (value) => setState(() => _breakConfig = value),
                           ),
+                          const Text("Flexible Break"),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                const Text("Group Name *", style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 6),
-                GestureDetector(
-                  onTap: _openGroupNameDialog,
-                  child: AbsorbPointer(
-                    child: TextField(
-                      controller: _groupNameController,
-                      decoration: const InputDecoration(
-                        hintText: "Shift Group Name",
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.arrow_drop_down),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kButtonColor,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                       ),
+                      onPressed: _submitForm,
+                      child: const Text("Submit", style: TextStyle(color: kTextColor)),
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                CheckboxListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text("Extra Time Management", style: TextStyle(fontWeight: FontWeight.bold)),
-                  value: _extraTimeManagement,
-                  onChanged: (value) {
-                    setState(() {
-                      _extraTimeManagement = value!;
-                    });
-                  },
-                ),
-                const SizedBox(height: 10),
-                const Text("Break Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: "Define",
-                      groupValue: _breakConfig,
-                      onChanged: (value) => setState(() => _breakConfig = value),
-                    ),
-                    const Text("Define Break"),
-                    const SizedBox(width: 20),
-                    Radio<String>(
-                      value: "Flexible",
-                      groupValue: _breakConfig,
-                      onChanged: (value) => setState(() => _breakConfig = value),
-                    ),
-                    const Text("Flexible Break"),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _submitForm,
-                    child: const Text("Submit"),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -540,144 +475,3 @@ class _CreateShiftPageState extends State<CreateShiftPage> {
     );
   }
 }
-
-class AddGroupNameDialog extends StatefulWidget {
-  const AddGroupNameDialog({super.key});
-
-  @override
-  State<AddGroupNameDialog> createState() => _AddGroupNameDialogState();
-}
-
-class _AddGroupNameDialogState extends State<AddGroupNameDialog> {
-  final TextEditingController _groupNameController = TextEditingController();
-  final List<String> _groupList = [
-    "PY Shift 2",
-    "GDC Shift 1",
-    "General Shift 2",
-    "Shift",
-    "General Shift",
-  ];
-
-  void _deleteGroup(int index) {
-    setState(() {
-      _groupList.removeAt(index);
-    });
-  }
-
-  void _editGroup(int index) {
-    _groupNameController.text = _groupList[index];
-    _deleteGroup(index);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.85,
-        ),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Add Group Name",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Group Name *",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 6),
-              TextField(
-                controller: _groupNameController,
-                decoration: const InputDecoration(
-                  hintText: "Group name",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 14),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade300,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text(
-                      "Cancel",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                    ),
-                    onPressed: () {
-                      final selected = _groupNameController.text.trim();
-                      if (selected.isNotEmpty) {
-                        Navigator.pop(context, selected);
-                      }
-                    },
-                    child: const Text("ADD"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Text(
-                  "Group Name",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _groupList.length,
-                itemBuilder: (context, index) {
-                  final name = _groupList[index];
-                  return ListTile(
-                    dense: true,
-                    title: Text(name),
-                    leading: const Icon(Icons.edit, size: 18),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete, size: 18),
-                      onPressed: () => _deleteGroup(index),
-                    ),
-                    onTap: () => _editGroup(index),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
