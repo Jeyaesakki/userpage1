@@ -1,11 +1,11 @@
 
 
+
+
 // import 'dart:io';
 // import 'package:flutter/material.dart';
 // import 'package:file_picker/file_picker.dart';
-// import 'package:open_filex/open_filex.dart';
 
-// // App-wide theme colors
 // const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
 // const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 // const Color kAppBarColor = Color(0xFF8C6EAF);
@@ -25,15 +25,21 @@
 //     'Daily Update': null,
 //   };
 
+//   final Map<String, bool> showPreview = {
+//     'Task assigned': false,
+//     'Daily Update': false,
+//   };
+
 //   Future<void> _pickFile(String section) async {
-//     final result = await FilePicker.platform.pickFiles(
-//       allowMultiple: false,
-//       type: FileType.any,
-//     );
+//     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
 //     if (result != null && result.files.single.path != null) {
+//       final filePath = result.files.single.path!;
+//       print("Picked File: $filePath");
+
 //       setState(() {
-//         uploadedFiles[section] = result.files.single.path!;
+//         uploadedFiles[section] = filePath;
+//         showPreview[section] = false;
 //       });
 
 //       ScaffoldMessenger.of(context).showSnackBar(
@@ -42,7 +48,7 @@
 //     }
 //   }
 
-//   Future<void> _viewFile(String section) async {
+//   void _viewFile(String section) {
 //     final filePath = uploadedFiles[section];
 
 //     if (filePath == null) {
@@ -53,29 +59,24 @@
 //     }
 
 //     final extension = filePath.split('.').last.toLowerCase();
-//     final file = File(filePath);
+//     final isImage = ['jpg', 'jpeg', 'png', 'gif'].contains(extension);
 
-//     if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].contains(extension)) {
-//       showDialog(
-//         context: context,
-//         builder: (_) => AlertDialog(
-//           title: Text('$section - Preview'),
-//           content: Image.file(file),
-//           actions: [
-//             TextButton(
-//               onPressed: () => Navigator.pop(context),
-//               child: const Text("Close"),
-//             ),
-//           ],
-//         ),
-//       );
-//     } else {
-//       final result = await OpenFilex.open(filePath);
-//       if (result.type != ResultType.done) {
+//     if (isImage) {
+//       final file = File(filePath);
+//       if (file.existsSync()) {
+//         setState(() {
+//           showPreview[section] = true;
+//         });
+//       } else {
+//         print("File does not exist at: $filePath");
 //         ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(content: Text('Failed to open file')),
+//           const SnackBar(content: Text('Image file not found')),
 //         );
 //       }
+//     } else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         const SnackBar(content: Text('Only image preview supported')),
+//       );
 //     }
 //   }
 
@@ -93,25 +94,19 @@
 //         ),
 //         child: SafeArea(
 //           child: Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+//             padding: const EdgeInsets.all(20.0),
 //             child: ListView(
 //               children: [
 //                 _buildHeader(context),
 //                 const SizedBox(height: 20),
-//                 const Text(
-//                   'My Task',
-//                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 17, 15, 15)),
+//                 const Center(
+//                   child: Text(
+//                     'My Task',
+//                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+//                   ),
 //                 ),
-//                 const SizedBox(height: 20),
-//                 ...uploadedFiles.keys.map((section) => Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         _buildLabel(section),
-//                         const SizedBox(height: 10),
-//                         _buildActionRow(section),
-//                         const SizedBox(height: 30),
-//                       ],
-//                     )),
+//                 const SizedBox(height: 30),
+//                 ...uploadedFiles.keys.map((section) => _buildTaskSection(section)).toList(),
 //               ],
 //             ),
 //           ),
@@ -121,69 +116,88 @@
 //   }
 
 //   Widget _buildHeader(BuildContext context) {
-//     return SingleChildScrollView(
-//       scrollDirection: Axis.horizontal,
-//       child: Row(
-//         children: [
-//           IconButton(
-//             icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 15, 12, 12)),
-//             onPressed: () => Navigator.pop(context),
-//           ),
-//           const SizedBox(width: 4),
-//           const Text('Others', style: TextStyle(color: Color.fromARGB(255, 17, 15, 15), fontSize: 16)),
-//           const Icon(Icons.arrow_right, color: kButtonColor),
-//           const Text('My Task',
-//               style: TextStyle(color: Color.fromARGB(255, 26, 22, 22), fontSize: 16, fontWeight: FontWeight.bold)),
-//           const SizedBox(width: 20),
-//           const Text('Welcome to SERV 🌐 EN ', style: TextStyle(fontSize: 12, color: kTextColor)),
-//           const CircleAvatar(
-//             backgroundColor: Colors.grey,
-//             radius: 14,
-//             child: Text('MR', style: TextStyle(fontSize: 12, color: kTextColor)),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildLabel(String text) {
-//     return Center(
-//       child: Container(
-//         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-//         decoration: BoxDecoration(
-//           color: kAppBarColor,
-//           borderRadius: BorderRadius.circular(20),
-//         ),
-//         child: Text(
-//           text,
-//           style: const TextStyle(color: kTextColor, fontWeight: FontWeight.bold),
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildActionRow(String section) {
 //     return Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //       children: [
-//         _buildActionButton('Upload', () => _pickFile(section)),
-//         _buildActionButton('View', () => _viewFile(section)),
+//         IconButton(
+//           icon: const Icon(Icons.arrow_back, color: Colors.black),
+//           onPressed: () => Navigator.pop(context), // ✅ back working
+//         ),
+//         const SizedBox(width: 8),
+//         const Text("Others", style: TextStyle(fontSize: 16)),
+//         const Icon(Icons.arrow_right, color: kButtonColor),
+//         const Text("My Task", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+//       ],
+//     );
+//   }
+
+//   Widget _buildTaskSection(String section) {
+//     final filePath = uploadedFiles[section];
+//     final shouldShowImage = showPreview[section] ?? false;
+//     final isImage = filePath != null &&
+//         filePath.contains('.') &&
+//         ['jpg', 'jpeg', 'png', 'gif'].contains(filePath.split('.').last.toLowerCase());
+
+//     return Column(
+//       children: [
+//         Container(
+//           width: double.infinity,
+//           margin: const EdgeInsets.symmetric(vertical: 10),
+//           padding: const EdgeInsets.symmetric(vertical: 14),
+//           decoration: BoxDecoration(
+//             color: kAppBarColor,
+//             borderRadius: BorderRadius.circular(16),
+//           ),
+//           child: Center(
+//             child: Text(
+//               section,
+//               style: const TextStyle(
+//                 fontSize: 18,
+//                 fontWeight: FontWeight.bold,
+//                 color: kTextColor,
+//               ),
+//             ),
+//           ),
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: [
+//             _buildActionButton('Upload', () => _pickFile(section)),
+//             _buildActionButton('View', () => _viewFile(section)),
+//           ],
+//         ),
+//         const SizedBox(height: 15),
+
+//         if (filePath != null && shouldShowImage && isImage)
+
+//           Padding(
+//             padding: const EdgeInsets.symmetric(vertical: 10),
+//             child: ClipRRect(
+//               borderRadius: BorderRadius.circular(12),
+//               child: Image.file(
+//                 File(filePath),
+//                 height: 220,
+//                 fit: BoxFit.contain,
+//               ),
+//             ),
+//           ),
+//         const SizedBox(height: 20),
 //       ],
 //     );
 //   }
 
 //   Widget _buildActionButton(String label, VoidCallback onTap) {
-//     return ElevatedButton(
-//       onPressed: onTap,
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: kButtonColor,
-//         foregroundColor: kTextColor,
-//         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 14),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//       ),
-//       child: Text(
-//         label,
-//         style: const TextStyle(fontWeight: FontWeight.bold),
+//     return Card(
+//       elevation: 4,
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+//       child: ElevatedButton(
+//         onPressed: onTap,
+//         style: ElevatedButton.styleFrom(
+//           backgroundColor: kButtonColor,
+//           foregroundColor: kTextColor,
+//           padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 16),
+//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+//         ),
+//         child: Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
 //       ),
 //     );
 //   }
@@ -290,7 +304,7 @@ class _MyTaskPageState extends State<MyTaskPage> {
                 const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    'My Task',
+                    'My Tasks',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -309,12 +323,12 @@ class _MyTaskPageState extends State<MyTaskPage> {
       children: [
         IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context), // ✅ back working
+          onPressed: () => Navigator.pop(context),
         ),
         const SizedBox(width: 8),
         const Text("Others", style: TextStyle(fontSize: 16)),
         const Icon(Icons.arrow_right, color: kButtonColor),
-        const Text("My Task", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text("My Tasks", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -350,14 +364,13 @@ class _MyTaskPageState extends State<MyTaskPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildActionButton('Upload', () => _pickFile(section)),
+            if (section != 'Daily Update') // ✅ Upload hidden for Daily Update
+              _buildActionButton('Upload', () => _pickFile(section)),
             _buildActionButton('View', () => _viewFile(section)),
           ],
         ),
         const SizedBox(height: 15),
-
         if (filePath != null && shouldShowImage && isImage)
-
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ClipRRect(
@@ -391,3 +404,6 @@ class _MyTaskPageState extends State<MyTaskPage> {
     );
   }
 }
+
+
+

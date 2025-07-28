@@ -275,7 +275,7 @@ class LiveAttendancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String currentDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
-    String currentTime = DateFormat('hh:mm a').format(DateTime.now());
+    
 
     final presentCount = 46;
     final absentCount = 8;
@@ -284,7 +284,7 @@ class LiveAttendancePage extends StatelessWidget {
     final checkInCount = 32;
     final checkOutCount = 18;
 
-    final halfDay = 2;
+    final halfDay = 2;     
     final lateCheckIn = 0;
     final earlyCheckOut = 0;
     final waitingForApprovals = 1;
@@ -383,7 +383,7 @@ class LiveAttendancePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Today - $currentDate", style: const TextStyle(fontWeight: FontWeight.w500)),
-                    Text(currentTime, style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 16)),
+                    
                   ],
                 ),
               ),

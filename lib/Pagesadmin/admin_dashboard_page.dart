@@ -37,10 +37,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
         title: const Text("Admin Dashboard"),
         backgroundColor: const Color(0xFF6A1B9A),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none),
-            onPressed: () {},
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.notifications_none),
+          //   onPressed: () {},
+          // ),
           PopupMenuButton(
             itemBuilder: (context) => [
               PopupMenuItem(

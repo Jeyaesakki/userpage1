@@ -279,7 +279,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Feedback submitted: $feedback'),
-                          backgroundColor: Colors.green,
+                          backgroundColor:  Color.fromARGB(255, 56, 58, 56),
                         ),
                       );
 

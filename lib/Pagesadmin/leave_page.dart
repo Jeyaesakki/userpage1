@@ -350,7 +350,7 @@ class _LeavePageState extends State<LeavePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Leave & Holiday"),
+        title: const Text("Leave & WeekOff"),
         backgroundColor: kAppBarColor,
       ),
       body: Container(

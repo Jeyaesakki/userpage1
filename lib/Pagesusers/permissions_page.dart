@@ -336,14 +336,14 @@ class _PermissionsPageState extends State<PermissionsPage> with WidgetsBindingOb
             _buildPermissionTile(Permission.activityRecognition, "Activity Recognition"),
             _buildPermissionTile(Permission.notification, "Notification Permission"),
             const SizedBox(height: 24),
-            Center(
-              child: ElevatedButton(
-                onPressed: _checkAllPermissions,
-                child: const Text("Check Again"),
-              ),
-            ),
+          //   Center(
+          //     child: ElevatedButton(
+          //       onPressed: _checkAllPermissions,
+          //       child: const Text("Check Again"),
+          //     ),
+          //   ),
           ],
-        ),
+         ),
       ),
     );
   }
