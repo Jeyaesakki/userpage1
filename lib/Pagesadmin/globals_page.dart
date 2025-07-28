@@ -2,12 +2,12 @@ List<Map<String, String>> leaveList = [
   {
     'type': 'Casual Leave',
     'dept': 'Technical Support',
-    'from': '19-01-2025',
-    'to': '31-01-2025',
-    'days': '4'
+    'from': '11-04-2025',
+    'to': '31-12-2025',
+    'days': '5'
   },
   {
-    'type': 'Casual Leave',
+    'type': 'Planned Leave',
     'dept': 'Operations',
     'from': '19-04-2025',
     'to': '31-01-2025',

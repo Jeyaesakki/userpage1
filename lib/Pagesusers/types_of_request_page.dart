@@ -7,9 +7,8 @@
 // import 'over_time_page.dart';
 // import 'half_day_time_page.dart';
 // import 'comp_off_page.dart';
-//  // ✅ color constants
 
-
+// // ✅ Color Constants
 // const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
 // const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 // const Color kAppBarColor = Color(0xFF8C6EAF);
@@ -63,7 +62,7 @@
 //         builder: (_) => Dialog(
 //           backgroundColor: kPrimaryBackgroundTop,
 //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-//           child: const SizedBox(
+//           child: SizedBox(
 //             height: 400,
 //             width: 350,
 //             child: HalfDayTimePage(
@@ -98,49 +97,64 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       backgroundColor: kPrimaryBackgroundBottom, // ✅ Updated background
 //       appBar: AppBar(
 //         title: const Text("Type Of Requests"),
-//         backgroundColor: kAppBarColor, // ✅ Updated AppBar color
+//         backgroundColor: kAppBarColor,
 //         centerTitle: true,
 //       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: GridView.builder(
-//           itemCount: requestTypes.length,
-//           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//             crossAxisCount: 2,
-//             crossAxisSpacing: 12,
-//             mainAxisSpacing: 12,
-//             childAspectRatio: 1.2,
+//       body: Container(
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             begin: Alignment.topCenter,
+//             end: Alignment.bottomCenter,
+//             colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
 //           ),
-//           itemBuilder: (context, index) {
-//             final item = requestTypes[index];
-//             return GestureDetector(
-//               onTap: () => _handleNavigation(context, item['title']),
-//               child: Container(
-//                 decoration: BoxDecoration(
-//                   color: kPrimaryBackgroundTop, // ✅ Updated box color
-//                   borderRadius: BorderRadius.circular(12),
-//                 ),
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Icon(item['icon'], size: 40, color: kButtonColor), // ✅ Updated icon color
-//                     const SizedBox(height: 10),
-//                     Text(
-//                       item['title'],
-//                       style: TextStyle(
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.w600,
-//                         color: kAppBarColor, // ✅ Updated text color
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.all(16.0),
+//           child: GridView.builder(
+//             itemCount: requestTypes.length,
+//             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//               crossAxisCount: 2,
+//               crossAxisSpacing: 12,
+//               mainAxisSpacing: 12,
+//               childAspectRatio: 1.2,
+//             ),
+//             itemBuilder: (context, index) {
+//               final item = requestTypes[index];
+//               return GestureDetector(
+//                 onTap: () => _handleNavigation(context, item['title']),
+//                 child: Container(
+//                   decoration: BoxDecoration(
+//                     color: kPrimaryBackgroundTop,
+//                     borderRadius: BorderRadius.circular(12),
+//                     boxShadow: const [
+//                       BoxShadow(
+//                         color: Colors.black12,
+//                         blurRadius: 4,
+//                         offset: Offset(2, 2),
 //                       ),
-//                     )
-//                   ],
+//                     ],
+//                   ),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Icon(item['icon'], size: 40, color: kButtonColor),
+//                       const SizedBox(height: 10),
+//                       Text(
+//                         item['title'],
+//                         style: const TextStyle(
+//                           fontSize: 16,
+//                           fontWeight: FontWeight.w600,
+//                           color: kAppBarColor,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
 //                 ),
-//               ),
-//             );
-//           },
+//               );
+//             },
+//           ),
 //         ),
 //       ),
 //     );
@@ -208,7 +222,7 @@ class TypeOfRequestPage extends StatelessWidget {
         builder: (_) => Dialog(
           backgroundColor: kPrimaryBackgroundTop,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: const SizedBox(
+          child: SizedBox(
             height: 400,
             width: 350,
             child: HalfDayTimePage(

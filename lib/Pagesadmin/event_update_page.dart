@@ -1,6 +1,15 @@
+
+
 // import 'package:flutter/material.dart';
 // import 'event_model_page.dart';
 // import 'add_event_page.dart';
+
+// // ✅ Color constants
+// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+// const Color kAppBarColor = Color(0xFF8C6EAF);
+// const Color kButtonColor = Color(0xFF655193);
+// const Color kTextColor = Colors.white;
 
 // class EventUpdatesPage extends StatefulWidget {
 //   const EventUpdatesPage({super.key});
@@ -13,29 +22,39 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       backgroundColor: const Color(0xFF001E4D),
+//       backgroundColor: kPrimaryBackgroundBottom, // ✅ updated background color
 //       appBar: AppBar(
-//         backgroundColor: const Color(0xFF0B87C9),
+//         backgroundColor: kAppBarColor, // ✅ updated AppBar color
 //         title: const Text('Event Updates'),
 //         actions: [
 //           TextButton.icon(
 //             onPressed: () {},
-//             icon: const Icon(Icons.search, color: Colors.white),
-//             label: const Text('Search', style: TextStyle(color: Color.fromARGB(255, 12, 8, 8))),
+//             icon: const Icon(Icons.search, color: kTextColor),
+//             label: const Text(
+//               'Search',
+//               style: TextStyle(color: kTextColor),
+//             ),
 //           ),
 //           TextButton.icon(
 //             onPressed: () {},
-//             icon: const Icon(Icons.download, color: Colors.white),
-//             label: const Text('Download', style: TextStyle(color: Color.fromARGB(255, 7, 5, 5))),
+//             icon: const Icon(Icons.download, color: kTextColor),
+//             label: const Text(
+//               'Download',
+//               style: TextStyle(color: kTextColor),
+//             ),
 //           ),
 //           ElevatedButton(
 //             onPressed: () async {
 //               await Navigator.push(
 //                 context,
-//                 MaterialPageRoute(builder: (context) => const AddEventPage()),
+//                 MaterialPageRoute(builder: (context) => const EventUploadPage()),
 //               );
 //               setState(() {}); // Refresh on return
 //             },
+//             style: ElevatedButton.styleFrom(
+//               backgroundColor: kButtonColor, // ✅ Updated button color
+//               foregroundColor: kTextColor,
+//             ),
 //             child: const Text('Add'),
 //           ),
 //           const SizedBox(width: 8),
@@ -51,12 +70,12 @@
 //           child: SingleChildScrollView(
 //             scrollDirection: Axis.horizontal,
 //             child: SizedBox(
-//               width: 900, // total width enough for all columns
+//               width: 900,
 //               child: Column(
 //                 children: [
 //                   Container(
 //                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-//                     color: Colors.pink[100],
+//                     color: kPrimaryBackgroundBottom.withOpacity(0.5), // ✅ Light lavender header
 //                     child: Row(
 //                       children: const [
 //                         _HeaderCell('Event Name', width: 120),
@@ -65,7 +84,7 @@
 //                         _HeaderCell('Location', width: 120),
 //                         _HeaderCell('Image Upload', width: 100),
 //                         _HeaderCell('Description', width: 150),
-//                         _HeaderCell('', width: 50), // Delete icon
+//                         _HeaderCell('', width: 50),
 //                       ],
 //                     ),
 //                   ),
@@ -140,8 +159,6 @@
 //   }
 // }
 
-// // ============ HEADER CELL ============
-
 // class _HeaderCell extends StatelessWidget {
 //   final String label;
 //   final double width;
@@ -153,16 +170,11 @@
 //       width: width,
 //       child: Text(
 //         label,
-//         style: const TextStyle(
-//           fontWeight: FontWeight.bold,
-//           wordSpacing: 2.0,
-//         ),
+//         style: const TextStyle(fontWeight: FontWeight.bold, wordSpacing: 2.0),
 //       ),
 //     );
 //   }
 // }
-
-// // ============ BODY CELL ============
 
 // class _BodyCell extends StatelessWidget {
 //   final String text;
@@ -177,13 +189,12 @@
 //         text,
 //         overflow: TextOverflow.ellipsis,
 //         maxLines: 1,
-//         style: const TextStyle(
-//           wordSpacing: 2.0,
-//         ),
+//         style: const TextStyle(wordSpacing: 2.0),
 //       ),
 //     );
 //   }
 // }
+
 
 import 'package:flutter/material.dart';
 import 'event_model_page.dart';
@@ -207,9 +218,9 @@ class _EventUpdatesPageState extends State<EventUpdatesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryBackgroundBottom, // ✅ updated background color
+      backgroundColor: kPrimaryBackgroundBottom,
       appBar: AppBar(
-        backgroundColor: kAppBarColor, // ✅ updated AppBar color
+        backgroundColor: kAppBarColor,
         title: const Text('Event Updates'),
         actions: [
           TextButton.icon(
@@ -237,7 +248,7 @@ class _EventUpdatesPageState extends State<EventUpdatesPage> {
               setState(() {}); // Refresh on return
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: kButtonColor, // ✅ Updated button color
+              backgroundColor: kButtonColor,
               foregroundColor: kTextColor,
             ),
             child: const Text('Add'),
@@ -258,22 +269,25 @@ class _EventUpdatesPageState extends State<EventUpdatesPage> {
               width: 900,
               child: Column(
                 children: [
+                  // ✅ HEADER ROW
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    color: kPrimaryBackgroundBottom.withOpacity(0.5), // ✅ Light lavender header
+                    color: kPrimaryBackgroundBottom.withOpacity(0.5),
                     child: Row(
                       children: const [
                         _HeaderCell('Event Name', width: 120),
-                        _HeaderCell('From Date', width: 90),
-                        _HeaderCell('To Date', width: 90),
+                        _HeaderCell('From Date', width: 120),
+                        _HeaderCell('To Date', width: 120),
                         _HeaderCell('Location', width: 120),
-                        _HeaderCell('Image Upload', width: 100),
-                        _HeaderCell('Description', width: 150),
-                        _HeaderCell('', width: 50),
+                        _HeaderCell('Image Upload', width: 120),
+                        _HeaderCell('Description', width: 120),
+                        _HeaderCell('Delete', width: 50), // ✅ Added here
                       ],
                     ),
                   ),
                   const Divider(height: 1, thickness: 1),
+
+                  // ✅ BODY ROWS
                   Expanded(
                     child: eventsList.isEmpty
                         ? const Center(child: Text('No data found'))
@@ -291,11 +305,11 @@ class _EventUpdatesPageState extends State<EventUpdatesPage> {
                                 child: Row(
                                   children: [
                                     _BodyCell(event.name, width: 120),
-                                    _BodyCell(event.fromDate.toString().split(' ')[0], width: 90),
-                                    _BodyCell(event.toDate.toString().split(' ')[0], width: 90),
+                                    _BodyCell(event.fromDate.toString().split(' ')[0], width: 120),
+                                    _BodyCell(event.toDate.toString().split(' ')[0], width: 120),
                                     _BodyCell(event.location, width: 120),
-                                    _BodyCell(event.imagePath.isNotEmpty ? '✔' : '', width: 100),
-                                    _BodyCell(event.description, width: 150),
+                                    _BodyCell(event.imagePath.isNotEmpty ? '✔' : '', width: 120),
+                                    _BodyCell(event.description, width: 120),
                                     SizedBox(
                                       width: 50,
                                       child: IconButton(
@@ -379,3 +393,6 @@ class _BodyCell extends StatelessWidget {
     );
   }
 }
+
+
+

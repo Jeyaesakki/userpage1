@@ -269,7 +269,7 @@ class EmployeeDetailPage extends StatelessWidget {
                       _buildRow('Shift', employee['shift']),
                       _buildRow('Location', employee['location']),
                       _buildRow('Check-in', employee['checkIn']),
-                      _buildRow('Check-out', employee['checkOut']),
+                      // _buildRow('Check-out', employee['checkOut']),
                       _buildRow('Geofence', employee['geofence']),
                       _buildRow('Latitude', employee['latitude'].toString()),
                       _buildRow('Longitude', employee['longitude'].toString()),

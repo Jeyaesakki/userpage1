@@ -1,5 +1,16 @@
+
+
+
+
 // import 'package:flutter/material.dart';
 // import 'apply_half_day_form_page.dart';
+//  // ✅ import your color constants
+
+// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+// const Color kAppBarColor = Color(0xFF8C6EAF);
+// const Color kButtonColor = Color(0xFF655193);
+// const Color kTextColor = Colors.white;
 
 // class CompOffPage extends StatelessWidget {
 //   final bool isPopup;
@@ -11,11 +22,11 @@
 //       padding: const EdgeInsets.all(16.0),
 //       child: Column(
 //         children: [
-//           // Search Field
+//           // 🔍 Search Field
 //           Container(
 //             padding: const EdgeInsets.symmetric(horizontal: 12),
 //             decoration: BoxDecoration(
-//               color: const Color(0xFFF3EFFF),
+//               color: kPrimaryBackgroundBottom.withOpacity(0.4), // ✅ updated
 //               borderRadius: BorderRadius.circular(8),
 //             ),
 //             child: const TextField(
@@ -28,7 +39,7 @@
 //           ),
 //           const SizedBox(height: 16),
 
-//           // Date and Status row
+//           // 📅 Date and Status row
 //           Row(
 //             children: [
 //               Expanded(
@@ -55,7 +66,7 @@
 
 //           const SizedBox(height: 40),
 
-//           // No data text
+//           // ❌ No Data
 //           const Center(
 //             child: Text(
 //               "No data available",
@@ -65,28 +76,33 @@
 
 //           const Spacer(),
 
-//           // ✅ Apply CompOff Button → Navigates to ApplyHalfDayForm
+//           // ✅ Apply CompOff Button
 //           SizedBox(
 //             width: 200,
 //             height: 45,
 //             child: ElevatedButton(
 //               onPressed: () {
 //                 final outerContext = context;
-//                 Navigator.pop(context); // Close the popup
+//                 Navigator.pop(context); // Close popup
 
 //                 Future.delayed(const Duration(milliseconds: 150), () {
 //                   Navigator.of(outerContext).push(
-//                     MaterialPageRoute(builder: (_) => const ApplyHalfDayForm()),
+//                     MaterialPageRoute(
+//                       builder: (_) => const ApplyHalfDayForm(),
+//                     ),
 //                   );
 //                 });
 //               },
 //               style: ElevatedButton.styleFrom(
-//                 backgroundColor: Colors.teal.shade400,
+//                 backgroundColor: kButtonColor, // ✅ updated
 //                 shape: RoundedRectangleBorder(
 //                   borderRadius: BorderRadius.circular(12),
 //                 ),
 //               ),
-//               child: const Text("Apply CompOff"),
+//               child: const Text(
+//                 "Apply CompOff",
+//                 style: TextStyle(color: kTextColor), // ✅ updated
+//               ),
 //             ),
 //           ),
 //         ],
@@ -96,10 +112,10 @@
 //     return isPopup
 //         ? SizedBox(height: 420, width: 350, child: content)
 //         : Scaffold(
-//             backgroundColor: Colors.white,
+//             backgroundColor: kPrimaryBackgroundTop, // ✅ updated
 //             appBar: AppBar(
 //               title: const Text("Comp Off"),
-//               backgroundColor: Colors.teal.shade400,
+//               backgroundColor: kAppBarColor, // ✅ updated
 //             ),
 //             body: content,
 //           );
@@ -108,8 +124,8 @@
 
 import 'package:flutter/material.dart';
 import 'apply_half_day_form_page.dart';
- // ✅ import your color constants
 
+// ✅ Theme Colors
 const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
 const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 const Color kAppBarColor = Color(0xFF8C6EAF);
@@ -130,7 +146,7 @@ class CompOffPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
-              color: kPrimaryBackgroundBottom.withOpacity(0.4), // ✅ updated
+              color: Colors.white.withOpacity(0.6),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const TextField(
@@ -143,7 +159,7 @@ class CompOffPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // 📅 Date and Status row
+          // 📅 Date and Status
           Row(
             children: [
               Expanded(
@@ -170,7 +186,7 @@ class CompOffPage extends StatelessWidget {
 
           const SizedBox(height: 40),
 
-          // ❌ No Data
+          // ❌ No Data Text
           const Center(
             child: Text(
               "No data available",
@@ -188,7 +204,6 @@ class CompOffPage extends StatelessWidget {
               onPressed: () {
                 final outerContext = context;
                 Navigator.pop(context); // Close popup
-
                 Future.delayed(const Duration(milliseconds: 150), () {
                   Navigator.of(outerContext).push(
                     MaterialPageRoute(
@@ -198,14 +213,14 @@ class CompOffPage extends StatelessWidget {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: kButtonColor, // ✅ updated
+                backgroundColor: kButtonColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
               child: const Text(
                 "Apply CompOff",
-                style: TextStyle(color: kTextColor), // ✅ updated
+                style: TextStyle(color: kTextColor),
               ),
             ),
           ),
@@ -213,15 +228,27 @@ class CompOffPage extends StatelessWidget {
       ),
     );
 
+    final gradientBackground = Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: SafeArea(
+        child: content,
+      ),
+    );
+
     return isPopup
-        ? SizedBox(height: 420, width: 350, child: content)
+        ? SizedBox(height: 420, width: 350, child: gradientBackground)
         : Scaffold(
-            backgroundColor: kPrimaryBackgroundTop, // ✅ updated
             appBar: AppBar(
               title: const Text("Comp Off"),
-              backgroundColor: kAppBarColor, // ✅ updated
+              backgroundColor: kAppBarColor,
             ),
-            body: content,
+            body: gradientBackground,
           );
   }
 }

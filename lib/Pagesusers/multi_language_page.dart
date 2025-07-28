@@ -92,11 +92,7 @@ class _MultiLanguagePageState extends State<MultiLanguagePage> {
 
   final List<String> _languages = [
     'English',
-    'தமிழ்',
-    'हिन्दी',
-    'ಕನ್ನಡ',
-    'മലയാളം',
-    'తెలుగు',
+
   ];
 
   void _onLanguageSelected(String language) {
