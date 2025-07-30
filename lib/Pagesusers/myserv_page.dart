@@ -272,14 +272,14 @@ class MyServPage extends StatelessWidget {
         imagePath: 'assets/images/event_icon.png',
         label: "Events Update",
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const EventUpdatesPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const UserEventUpdatesPage()));
         },
       ),
       _ServItemData(
         imagePath: 'assets/images/rewards1.png',
         label: "Rewards",
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const MyRewardsPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const UserRewardsPage()));
         },
       ),
     ];

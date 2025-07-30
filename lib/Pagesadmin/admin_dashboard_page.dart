@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'company_setup_page.dart';
 import 'live_attendance_page.dart';
-import 'request_and_leave_approval_page.dart';
+import 'leave_approval_screen.dart';
 import 'employee_management_page.dart';
 import 'attendance_report_page.dart';
 import 'others_page.dart';
