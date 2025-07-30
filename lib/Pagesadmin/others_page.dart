@@ -211,7 +211,7 @@ class OthersPage extends StatelessWidget {
                 _buildMenuButton(context, 'Feedback', onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const FeedbackPage()),
+                    MaterialPageRoute(builder: (context) => const FeedbackPage(employeeName: '', employeeId: '',)),
                   );
                 }),
 
