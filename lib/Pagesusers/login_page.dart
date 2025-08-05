@@ -1,10 +1,9 @@
 
 
-
 // import 'package:flutter/material.dart';
 // import 'package:serv_app/Pagesusers/home_screen_page.dart';
-// import 'package:serv_app/Pagesadmin/company_setup_page.dart';
 
+// import 'package:serv_app/Pagesadmin/company_details_page.dart';
 
 // // Theme Colors
 // const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
@@ -27,6 +26,8 @@
 //   final FocusNode emailFocus = FocusNode();
 //   final FocusNode passwordFocus = FocusNode();
 //   bool isPasswordVisible = false;
+  
+  
 
 //   @override
 //   void dispose() {
@@ -202,15 +203,16 @@
 //                           width: double.infinity,
 //                           height: 44,
 //                           child: ElevatedButton(
-//                             onPressed: () {
-//                               if (_formKey.currentState!.validate()) {
-//                                 Navigator.pushReplacement(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (_) => const CompanySetupPage()),
-//                                 );
-//                               }
-//                             },
+//                              onPressed: () {
+//     if (_formKey.currentState!.validate()) {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//           builder: (_) => const CompanyDetailsFormPage(),  // just push the form
+//         ),
+//       );
+//     }
+//   },
 //                             style: ElevatedButton.styleFrom(
 //                               backgroundColor: kButtonColor,
 //                               shape: RoundedRectangleBorder(
@@ -287,6 +289,8 @@
 //     );
 //   }
 // }
+
+
 
 import 'package:flutter/material.dart';
 import 'package:serv_app/Pagesusers/home_screen_page.dart';

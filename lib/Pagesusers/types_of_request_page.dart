@@ -1,6 +1,5 @@
 
 
-
 // import 'package:flutter/material.dart';
 // import 'request_leave_page.dart';
 // import 'permission_time_page.dart';
@@ -161,12 +160,15 @@
 //   }
 // }
 
+
 import 'package:flutter/material.dart';
 import 'request_leave_page.dart';
 import 'permission_time_page.dart';
 import 'over_time_page.dart';
 import 'half_day_time_page.dart';
-import 'comp_off_page.dart';
+import 'apply_half_day_form_page.dart';
+
+// import 'comp_off_page.dart';
 
 // ✅ Color Constants
 const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
@@ -187,72 +189,53 @@ class TypeOfRequestPage extends StatelessWidget {
   ];
 
   void _handleNavigation(BuildContext context, String title) {
-    if (title == 'Leave Type') {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (_) => const RequestLeavePage(),
-      );
-    } else if (title == 'Permission Time') {
-      showDialog(
-        context: context,
-        builder: (_) => Dialog(
-          backgroundColor: kPrimaryBackgroundTop,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: const PermissionTimePage(isPopup: true),
-        ),
-      );
-    } else if (title == 'Over Time') {
-      showDialog(
-        context: context,
-        builder: (_) => Dialog(
-          backgroundColor: kPrimaryBackgroundTop,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: const SizedBox(
-            height: 300,
-            width: 350,
-            child: OverTimePage(isPopup: true),
-          ),
-        ),
-      );
-    } else if (title == 'Half Day Time') {
-      showDialog(
-        context: context,
-        builder: (_) => Dialog(
-          backgroundColor: kPrimaryBackgroundTop,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: SizedBox(
-            height: 400,
-            width: 350,
-            child: HalfDayTimePage(
-              isPopup: true,
-              totalHalfDays: 8,
-              takenHalfDays: 4,
-              status: "Available",
-            ),
-          ),
-        ),
-      );
-    } else if (title == 'Comp Off') {
-      showDialog(
-        context: context,
-        builder: (_) => Dialog(
-          backgroundColor: kPrimaryBackgroundTop,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: const SizedBox(
-            height: 420,
-            width: 350,
-            child: CompOffPage(isPopup: true),
-          ),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('$title clicked - not connected')),
-      );
-    }
+  if (title == 'Leave Type') {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => RequestLeavePage(),
+    );
+  } else if (title == 'Permission Time') {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const PermissionTimePage(isPopup: false), // full screen
+    );
+  } else if (title == 'Over Time') {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const OverTimePage(isPopup: false), // full screen
+    );
+  } else if (title == 'Half Day Time') {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const HalfDayTimePage(
+        isPopup: false,
+        totalHalfDays: 8,
+        takenHalfDays: 4,
+        status: "Available",
+      ),
+    );
+  } else if (title == 'Comp Off') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_)=> const ApplyHalfDayForm()),
+    );
   }
+
+//    } else {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text('$title clicked - not connected')),
+//     );
+//   }
+}
+
 
   @override
   Widget build(BuildContext context) {

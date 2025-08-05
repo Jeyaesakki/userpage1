@@ -1,4 +1,12 @@
+
+
+
 // import 'package:flutter/material.dart';
+
+// // Theme Colors
+// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+// const Color kAppBarColor = Color(0xFF8C6EAF);
 
 // class FeedbackPage extends StatefulWidget {
 //   const FeedbackPage({super.key});
@@ -15,13 +23,12 @@
 //     if (_formKey.currentState!.validate()) {
 //       _feedbackController.text.trim();
 
-//       // You can send feedback to MySQL/Python backend here later
-//       // For now, just show success message
+//       // Submit to backend here if needed
 //       ScaffoldMessenger.of(context).showSnackBar(
 //         const SnackBar(content: Text('Feedback submitted successfully!')),
 //       );
 
-//       _feedbackController.clear(); // clear the text box
+//       _feedbackController.clear();
 //     }
 //   }
 
@@ -31,8 +38,18 @@
 //       appBar: AppBar(
 //         title: const Text('Feedback'),
 //         centerTitle: true,
+//         backgroundColor: kAppBarColor,
 //       ),
-//       body: Padding(
+//       body: Container(
+//         width: double.infinity,
+//         height: double.infinity,
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+//             begin: Alignment.topCenter,
+//             end: Alignment.bottomCenter,
+//           ),
+//         ),
 //         padding: const EdgeInsets.all(20.0),
 //         child: Form(
 //           key: _formKey,
@@ -69,6 +86,8 @@
 //     );
 //   }
 // }
+
+
 
 
 import 'package:flutter/material.dart';

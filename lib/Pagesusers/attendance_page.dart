@@ -1,562 +1,48 @@
-
-// import 'dart:async';
-// import 'package:flutter/material.dart';
-// import 'package:serv_app/Pagesusers/face_rec_page.dart';
-// import 'package:serv_app/Pagesusers/myserv_page.dart'; // ✅ Import MyServPage
-
-// class AttendancePage extends StatefulWidget {
-//   const AttendancePage({super.key});
-
-//   @override
-//   _AttendancePageState createState() => _AttendancePageState();
-// }
-
-// class _AttendancePageState extends State<AttendancePage> {
-//   String name = "Dharani";
-//   String role = "Employee";
-//   String id = "2113391075007";
-
-//   bool isShiftSelected = false;
-//   bool isCheckedIn = false;
-//   Timer? _timer;
-//   int _elapsedSeconds = 0;
-
-//   @override
-//   void dispose() {
-//     _timer?.cancel();
-//     super.dispose();
-//   }
-
-//   void _startTimer() {
-//     setState(() {
-//       isCheckedIn = true;
-//     });
-//     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-//       setState(() {
-//         _elapsedSeconds++;
-//       });
-//     });
-//   }
-
-//   void _stopTimer() {
-//     _timer?.cancel();
-//     setState(() {
-//       isCheckedIn = false;
-//       isShiftSelected = false;
-//       _elapsedSeconds = 0;
-//     });
-//   }
-
-//   String _format(int n) => n.toString().padLeft(2, '0');
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final currentDate = DateTime.now();
-//     final formattedDate =
-//         "${currentDate.day.toString().padLeft(2, '0')} ${_monthName(currentDate.month)} ${currentDate.year}";
-
-//     final hours = _elapsedSeconds ~/ 3600;
-//     final minutes = (_elapsedSeconds % 3600) ~/ 60;
-//     final seconds = _elapsedSeconds % 60;
-
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFB9B9F5),
-//       body: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-//           child: Column(
-//             children: [
-//               // Back and title
-//               Row(
-//                 children: [
-//                   IconButton(
-//                     icon: const Icon(Icons.arrow_back, color: Colors.black),
-//                     onPressed: () => Navigator.pop(context),
-//                   ),
-//                   const Text(
-//                     "Attendance",
-//                     style: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 18,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-
-//               const SizedBox(height: 8),
-
-//               // Profile Card
-//               Container(
-//                 width: double.infinity,
-//                 padding: const EdgeInsets.all(12),
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(8),
-//                 ),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-//                     const SizedBox(height: 3),
-//                     Text("$id / $role", style: const TextStyle(fontWeight: FontWeight.bold)),
-//                     const SizedBox(height: 3),
-//                     Row(
-//                       children: [
-//                         const Icon(Icons.calendar_today, size: 14),
-//                         const SizedBox(width: 5),
-//                         Text(formattedDate, style: const TextStyle(fontSize: 13)),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ),
-
-//               const SizedBox(height: 20),
-
-//               const Icon(Icons.access_time, size: 30),
-//               const SizedBox(height: 8),
-
-//               // Timer
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   _timeField(_format(hours)),
-//                   const SizedBox(width: 6),
-//                   _timeField(_format(minutes)),
-//                   const SizedBox(width: 6),
-//                   _timeField(_format(seconds)),
-//                   const SizedBox(width: 6),
-//                   const Text("Hrs", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-//                 ],
-//               ),
-
-//               const SizedBox(height: 16),
-
-//               // Shift 1 Button
-//               ElevatedButton.icon(
-//                 onPressed: isCheckedIn
-//                     ? null
-//                     : () {
-//                         setState(() {
-//                           isShiftSelected = true;
-//                         });
-//                       },
-//                 icon: const Icon(Icons.schedule, size: 18),
-//                 label: const Text("Shift 1", style: TextStyle(fontSize: 14)),
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.deepPurple,
-//                   foregroundColor: Colors.white,
-//                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-//                 ),
-//               ),
-
-//               const SizedBox(height: 20),
-
-//               // Action Buttons
-//               Wrap(
-//                 spacing: 12,
-//                 runSpacing: 10,
-//                 alignment: WrapAlignment.center,
-//                 children: [
-//                   _actionButton(Icons.face, "Face Detection", Colors.teal, () {
-//                     if (!isShiftSelected) {
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         const SnackBar(content: Text("Please select Shift 1 before Face Detection.")),
-//                       );
-//                       return;
-//                     }
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (_) => FaceRecPage(onFaceDetected: _startTimer),
-//                       ),
-//                     );
-//                   }),
-
-//                   !isCheckedIn
-//                       ? ElevatedButton.icon(
-//                           onPressed: isShiftSelected ? _startTimer : null,
-//                           icon: const Icon(Icons.check_circle_outline, size: 18),
-//                           label: const Text("Check In", style: TextStyle(fontSize: 13)),
-//                           style: ElevatedButton.styleFrom(
-//                             backgroundColor: isShiftSelected ? Colors.teal : Colors.grey,
-//                             foregroundColor: Colors.white,
-//                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//                           ),
-//                         )
-//                       : _actionButton(Icons.logout, "Check Out", Colors.red, _stopTimer),
-//                 ],
-//               ),
-
-//               const Spacer(),
-
-//               // ✅ My Serve Button Navigation
-//               ElevatedButton(
-//                 onPressed: () {
-//                   Navigator.push(
-//                     context,
-//                     MaterialPageRoute(builder: (context) => const MyServPage()),
-//                   );
-//                 },
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.white,
-//                   foregroundColor: Colors.black,
-//                   elevation: 2,
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(16),
-//                   ),
-//                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                 ),
-//                 child: const Text("My Serv", style: TextStyle(fontSize: 13)),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   String _monthName(int month) {
-//     const months = [
-//       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-//       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-//     ];
-//     return months[month - 1];
-//   }
-
-//   Widget _timeField(String value) {
-//     return Container(
-//       width: 36,
-//       height: 36,
-//       alignment: Alignment.center,
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(6),
-//         border: Border.all(color: Colors.black54),
-//       ),
-//       child: Text(
-//         value,
-//         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-//       ),
-//     );
-//   }
-
-//   Widget _actionButton(IconData icon, String label, Color color, VoidCallback onPressed) {
-//     return ElevatedButton.icon(
-//       onPressed: onPressed,
-//       icon: Icon(icon, size: 18),
-//       label: Text(label, style: const TextStyle(fontSize: 13)),
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: color,
-//         foregroundColor: Colors.white,
-//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//         elevation: 3,
-//       ),
-//     );
-//   }
-// }
-
-// import 'dart:async';
-// import 'package:flutter/material.dart';
-// import 'package:serv_app/Pagesusers/face_rec_page.dart';
-// import 'package:serv_app/Pagesusers/myserv_page.dart';
-
-// // Color Constants
-// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
-// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
-// const Color kAppBarColor = Color(0xFF8C6EAF);
-// const Color kButtonColor = Color(0xFF655193);
-// const Color kTextColor = Colors.white;
-
-// class AttendancePage extends StatefulWidget {
-//   const AttendancePage({super.key});
-
-//   @override
-//   _AttendancePageState createState() => _AttendancePageState();
-// }
-
-// class _AttendancePageState extends State<AttendancePage> {
-//   String name = "Dharani";
-//   String role = "Employee";
-//   String id = "2113391075007";
-
-//   bool isShiftSelected = false;
-//   bool isCheckedIn = false;
-//   Timer? _timer;
-//   int _elapsedSeconds = 0;
-
-//   @override
-//   void dispose() {
-//     _timer?.cancel();
-//     super.dispose();
-//   }
-
-//   void _startTimer() {
-//     setState(() {
-//       isCheckedIn = true;
-//     });
-//     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-//       setState(() {
-//         _elapsedSeconds++;
-//       });
-//     });
-//   }
-
-//   void _stopTimer() {
-//     _timer?.cancel();
-//     setState(() {
-//       isCheckedIn = false;
-//       isShiftSelected = false;
-//       _elapsedSeconds = 0;
-//     });
-//   }
-
-//   String _format(int n) => n.toString().padLeft(2, '0');
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final currentDate = DateTime.now();
-//     final formattedDate =
-//         "${currentDate.day.toString().padLeft(2, '0')} ${_monthName(currentDate.month)} ${currentDate.year}";
-
-//     final hours = _elapsedSeconds ~/ 3600;
-//     final minutes = (_elapsedSeconds % 3600) ~/ 60;
-//     final seconds = _elapsedSeconds % 60;
-
-//     return Scaffold(
-//       backgroundColor: kPrimaryBackgroundBottom,
-//       body: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-//           child: Column(
-//             children: [
-//               Row(
-//                 children: [
-//                   IconButton(
-//                     icon: const Icon(Icons.arrow_back, color: Colors.black),
-//                     onPressed: () => Navigator.pop(context),
-//                   ),
-//                   const Text(
-//                     "Attendance",
-//                     style: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 18,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 8),
-
-//               // Profile Card
-//               Container(
-//                 width: double.infinity,
-//                 padding: const EdgeInsets.all(12),
-//                 decoration: BoxDecoration(
-//                   color: kPrimaryBackgroundTop,
-//                   borderRadius: BorderRadius.circular(8),
-//                 ),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-//                     const SizedBox(height: 3),
-//                     Text("$id / $role", style: const TextStyle(fontWeight: FontWeight.bold)),
-//                     const SizedBox(height: 3),
-//                     Row(
-//                       children: [
-//                         const Icon(Icons.calendar_today, size: 14),
-//                         const SizedBox(width: 5),
-//                         Text(formattedDate, style: const TextStyle(fontSize: 13)),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-//               SizedBox(
-//                         height: 40,
-//                         width: 40,
-//                         child: Image.asset('assets/images/clock.png'),
-//                       ),
-//               //const Icon(Icons.access_time, size: 70),
-//               const SizedBox(height: 8),
-
-//               // Timer Display
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   _timeField(_format(hours)),
-//                   const SizedBox(width: 6),
-//                   _timeField(_format(minutes)),
-//                   const SizedBox(width: 6),
-//                   _timeField(_format(seconds)),
-//                   const SizedBox(width: 6),
-//                   const Text("Hrs", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-//                 ],
-//               ),
-//               const SizedBox(height: 16),
-
-//               // Shift Button
-//               ElevatedButton.icon(
-//                 onPressed: isCheckedIn
-//                     ? null
-//                     : () {
-//                         setState(() {
-//                           isShiftSelected = true;
-//                         });
-//                       },
-//                 icon: const Icon(Icons.schedule, size: 18),
-//                 label: const Text("Shift 1", style: TextStyle(fontSize: 14)),
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: kButtonColor,
-//                   foregroundColor: kTextColor,
-//                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-//                 ),
-//               ),
-
-//               const SizedBox(height: 20),
-
-//               // Action Buttons
-//               Wrap(
-//                 spacing: 12,
-//                 runSpacing: 10,
-//                 alignment: WrapAlignment.center,
-//                 children: [
-//                   _actionButton(Icons.face, "Face Detection", Colors.teal, () {
-//                     if (!isShiftSelected) {
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         const SnackBar(content: Text("Please select Shift 1 before Face Detection.")),
-//                       );
-//                       return;
-//                     }
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (_) => FaceRecPage(onFaceDetected: _startTimer),
-//                       ),
-//                     );
-//                   }),
-
-//                   !isCheckedIn
-//                       ? ElevatedButton.icon(
-//                           onPressed: isShiftSelected ? _startTimer : null,
-//                           icon: const Icon(Icons.check_circle_outline, size: 18),
-//                           label: const Text("Check In", style: TextStyle(fontSize: 13)),
-//                           style: ElevatedButton.styleFrom(
-//                             backgroundColor: isShiftSelected ? Colors.teal : Colors.grey,
-//                             foregroundColor: Colors.white,
-//                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//                           ),
-//                         )
-//                       : _actionButton(Icons.logout, "Check Out", Colors.red, _stopTimer),
-//                 ],
-//               ),
-
-//               const Spacer(),
-
-//               // MyServ Button
-//               ElevatedButton(
-//                 onPressed: () {
-//                   Navigator.push(
-//                     context,
-//                     MaterialPageRoute(builder: (_) => const MyServPage()),
-//                   );
-//                 },
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: kPrimaryBackgroundTop,
-//                   foregroundColor: Colors.black,
-//                   elevation: 2,
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(16),
-//                   ),
-//                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                 ),
-//                 child: const Text("My Serv", style: TextStyle(fontSize: 15)),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   String _monthName(int month) {
-//     const months = [
-//       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-//       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-//     ];
-//     return months[month - 1];
-//   }
-
-//   Widget _timeField(String value) {
-//     return Container(
-//       width: 36,
-//       height: 36,
-//       alignment: Alignment.center,
-//       decoration: BoxDecoration(
-//         color: kPrimaryBackgroundTop,
-//         borderRadius: BorderRadius.circular(6),
-//         border: Border.all(color: Colors.black54),
-//       ),
-//       child: Text(
-//         value,
-//         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-//       ),
-//     );
-//   }
-
-//   Widget _actionButton(IconData icon, String label, Color color, VoidCallback onPressed) {
-//     return ElevatedButton.icon(
-//       onPressed: onPressed,
-//       icon: Icon(icon, size: 18),
-//       label: Text(label, style: const TextStyle(fontSize: 13)),
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: color,
-//         foregroundColor: Colors.white,
-//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//         elevation: 3,
-//       ),
-//     );
-//   }
-// }
-
-
-
-import 'dart:async';
+// 5).....
 import 'package:flutter/material.dart';
-import 'package:serv_app/Pagesusers/face_rec_page.dart';
+import 'dart:async';
 
-// Color Constants
+// Color constants
 const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
 const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 const Color kAppBarColor = Color(0xFF8C6EAF);
 const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
 
-class AttendancePage extends StatefulWidget {
-  const AttendancePage({super.key});
-
+class AttendanceScreen extends StatefulWidget {
   @override
-  _AttendancePageState createState() => _AttendancePageState();
+  _AttendanceScreenState createState() => _AttendanceScreenState();
 }
 
-class _AttendancePageState extends State<AttendancePage> {
-  String name = "Dharani";
-  String role = "Employee";
-  String id = "2113391075007";
-
+class _AttendanceScreenState extends State<AttendanceScreen> {
+  // User states
+  bool isFaceRegistered = false;
   bool isShiftSelected = false;
   bool isCheckedIn = false;
+  bool isTimerRunning = false;
+  
+  // Dynamic user info
+  String userName = "GCAREIC|OPERATIONS";
+  String userId = "EMP001";
+  
+  // Shift selection
+  String selectedShift = "Shift";
+  bool shiftClicked = false;
+  
+  // Timer variables
   Timer? _timer;
-  int _elapsedSeconds = 0;
+  int totalSeconds = 0;
+  String hours = "00";
+  String minutes = "00";
+  String seconds = "00";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+    _checkUserFaceRegistration();
+    // Don't start any timer initially - show 00:00:00
+  }
 
   @override
   void dispose() {
@@ -564,45 +50,289 @@ class _AttendancePageState extends State<AttendancePage> {
     super.dispose();
   }
 
-  void _startTimer() {
+  // Load user information
+  Future<void> _loadUserInfo() async {
+    // TODO: Get from backend or SharedPreferences
+    setState(() {
+      userName = "GCAREIC|OPERATIONS";
+      userId = "EMP001";
+    });
+  }
+
+  // Check if user face is already registered
+  Future<void> _checkUserFaceRegistration() async {
+    setState(() {
+      isFaceRegistered = false;
+    });
+  }
+
+  // Start work timer after check-in (STARTS FROM 00:00:00)
+  void _startWorkTimer() {
+    setState(() {
+      isTimerRunning = true;
+      totalSeconds = 0;
+      hours = "00";
+      minutes = "00";
+      seconds = "00";
+    });
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          totalSeconds++;
+          hours = (totalSeconds ~/ 3600).toString().padLeft(2, '0');
+          minutes = ((totalSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
+          seconds = (totalSeconds % 60).toString().padLeft(2, '0');
+        });
+      }
+    });
+  }
+
+  // Stop work timer after check-out
+  void _stopWorkTimer() {
+    _timer?.cancel();
+    setState(() {
+      isTimerRunning = false;
+      isCheckedIn = false;
+      // Reset to 00:00:00 after checkout
+      totalSeconds = 0;
+      hours = "00";
+      minutes = "00";
+      seconds = "00";
+    });
+    
+    _showSuccessDialog('Check-out successful!\nWork duration: ${hours}h ${minutes}m ${seconds}s');
+  }
+
+  // Shift selection
+  void _clickShift() {
+    setState(() {
+      shiftClicked = true;
+      isShiftSelected = true;
+    });
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Shift selected! You can now proceed.'),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  // Get month name
+  String _getMonthName(int month) {
+    const months = [
+      '', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+      'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
+    ];
+    return months[month];
+  }
+
+  // Face registration
+  Future<void> _registerFace() async {
+    try {
+      bool? proceed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Face Registration'),
+          content: Text('This will open your camera to register your face.\n\nNote: Currently in demo mode. Backend integration pending.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text('Proceed'),
+            ),
+          ],
+        ),
+      );
+      
+      if (proceed != true) return;
+      
+      _showLoadingDialog('Opening camera...');
+      await Future.delayed(Duration(seconds: 2));
+      
+      Navigator.pop(context);
+      _showLoadingDialog('Processing face...');
+      await Future.delayed(Duration(seconds: 3));
+      
+      Navigator.pop(context);
+      
+      // SUCCESS - Face registered
+      setState(() {
+        isFaceRegistered = true;
+      });
+      
+      _showSuccessDialog('Face registered successfully!\n\nYou can now use face detection for attendance.');
+      
+    } catch (e) {
+      Navigator.pop(context);
+      _showErrorDialog('Face registration failed. Please try again with manual check-in.');
+    }
+  }
+
+  // Face detection for check-in (ONLY AVAILABLE AFTER FACE REGISTRATION)
+  Future<void> _faceDetectionCheckIn() async {
+    try {
+      bool? proceed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Face Detection'),
+          content: Text('This will open your camera for face detection.\n\nNote: Currently in demo mode.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text('Proceed'),
+            ),
+          ],
+        ),
+      );
+      
+      if (proceed != true) return;
+      
+      _showLoadingDialog('Opening camera...');
+      await Future.delayed(Duration(seconds: 2));
+      
+      Navigator.pop(context);
+      _showLoadingDialog('Detecting face...');
+      await Future.delayed(Duration(seconds: 3));
+      
+      Navigator.pop(context);
+      
+      bool faceMatched = true; // Demo - will come from backend
+      
+      if (faceMatched) {
+        _performCheckIn('face_detection');
+      // ignore: dead_code
+      } else {
+      }
+      
+    } catch (e) {
+      Navigator.pop(context);
+      _showErrorDialog('Face detection failed. Please try manual check-in.');
+    }
+  }
+
+  // Manual check-in (ALWAYS AVAILABLE AFTER SHIFT SELECTION)
+  void _manualCheckIn() {
+    _performCheckIn('manual');
+  }
+
+  // Perform check-in
+  void _performCheckIn(String type) {
     setState(() {
       isCheckedIn = true;
     });
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _elapsedSeconds++;
-      });
-    });
+    
+    _startWorkTimer(); // Start timer from 00:00:00
+    _showSuccessDialog('Check-in successful! Timer started.');
   }
 
-  void _stopTimer() {
-    _timer?.cancel();
-    setState(() {
-      isCheckedIn = false;
-      isShiftSelected = false;
-      _elapsedSeconds = 0;
-    });
+  // Check-out
+  void _checkOut() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Check Out'),
+        content: Text('Are you sure you want to check out?\nWork duration: ${hours}h ${minutes}m ${seconds}s'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _stopWorkTimer();
+            },
+            child: Text('Check Out'),
+          ),
+        ],
+      ),
+    );
   }
 
-  String _format(int n) => n.toString().padLeft(2, '0');
+  // Dialog helpers
+  void _showLoadingDialog(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 15),
+            Text(message),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Success'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentDate = DateTime.now();
-    final formattedDate =
-        "${currentDate.day.toString().padLeft(2, '0')} ${_monthName(currentDate.month)} ${currentDate.year}";
-
-    final hours = _elapsedSeconds ~/ 3600;
-    final minutes = (_elapsedSeconds % 3600) ~/ 60;
-    final seconds = _elapsedSeconds % 60;
-
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kAppBarColor,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: kTextColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          'Attendance',
+          style: TextStyle(
+            color: kTextColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Container(
-        height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
               kPrimaryBackgroundTop,
               kPrimaryBackgroundBottom,
@@ -611,131 +341,368 @@ class _AttendancePageState extends State<AttendancePage> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    const Text(
-                      "Attendance",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-
-                // Profile Card
+                // Header Section - Dynamic
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: kPrimaryBackgroundTop,
-                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 3),
-                      Text("$id / $role", style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 3),
+                      Text(
+                        'NAME',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      Text(
+                        userName,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        'ID: $userId',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      SizedBox(height: 6),
                       Row(
                         children: [
-                          const Icon(Icons.calendar_today, size: 14),
-                          const SizedBox(width: 5),
-                          Text(formattedDate, style: const TextStyle(fontSize: 13)),
+                          Icon(
+                            Icons.calendar_today,
+                            size: 14,
+                            color: Colors.grey[600],
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            '${DateTime.now().day.toString().padLeft(2, '0')} ${_getMonthName(DateTime.now().month)} ${DateTime.now().year}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[600],
+                            ),
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Image.asset('assets/images/clock.png'),
+                
+                SizedBox(height: 20), // Reduced
+                
+                // Clock Icon
+                Container(
+                  width: 65,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    color: kButtonColor.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: kButtonColor.withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  child: Icon(
+                    isTimerRunning ? Icons.timer : Icons.access_time,
+                    size: 32,
+                    color: kButtonColor,
+                  ),
                 ),
-                const SizedBox(height: 8),
-
-                // Timer Display
+                
+                SizedBox(height: 15), // Reduced
+                
+                // Time Display - SHOWS 00:00:00 BEFORE CHECK-IN
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _timeField(_format(hours)),
-                    const SizedBox(width: 6),
-                    _timeField(_format(minutes)),
-                    const SizedBox(width: 6),
-                    _timeField(_format(seconds)),
-                    const SizedBox(width: 6),
-                    const Text("Hrs", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                    _buildTimeBox(hours),
+                    SizedBox(width: 6),
+                    Text(
+                      ':',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: kButtonColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 6),
+                    _buildTimeBox(minutes),
+                    SizedBox(width: 6),
+                    Text(
+                      ':',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: kButtonColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 6),
+                    _buildTimeBox(seconds),
+                    SizedBox(width: 12),
+                    Text(
+                      isTimerRunning ? 'Work' : 'Hrs',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: kButtonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 16),
-
-                // Shift Button
-                ElevatedButton.icon(
-                  onPressed: isCheckedIn
-                      ? null
-                      : () {
-                          setState(() {
-                            isShiftSelected = true;
-                          });
-                        },
-                  icon: const Icon(Icons.schedule, size: 18),
-                  label: const Text("Shift 1", style: TextStyle(fontSize: 14)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kButtonColor,
-                    foregroundColor: kTextColor,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                
+                SizedBox(height: 20), // Reduced
+                
+                // Shift Selector
+                GestureDetector(
+                  onTap: shiftClicked ? null : _clickShift,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: shiftClicked ? kButtonColor : kButtonColor.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      selectedShift,
+                      style: TextStyle(
+                        color: kTextColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                // Action Buttons
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 10,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    _actionButton(Icons.face, "Face Detection", Colors.teal, () {
-                      if (!isShiftSelected) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Please select Shift 1 before Face Detection.")),
-                        );
-                        return;
-                      }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => FaceRecPage(onFaceDetected: _startTimer),
-                        ),
-                      );
-                    }),
-                    !isCheckedIn
-                        ? ElevatedButton.icon(
-                            onPressed: isShiftSelected ? _startTimer : null,
-                            icon: const Icon(Icons.check_circle_outline, size: 18),
-                            label: const Text("Check In", style: TextStyle(fontSize: 13)),
+                
+                SizedBox(height: 15), // Reduced spacing between shift and buttons
+                
+                // CORRECTED BUTTON FLOW
+                if (!isShiftSelected) ...[
+                  // Step 1: Select shift first
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      'Please select your shift first',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ] else if (!isCheckedIn) ...[
+                  // Step 2: After shift selection - Show face register + manual check-in
+                  if (!isFaceRegistered) ...[
+                    // Show Face Register + Manual Check-in (NO FACE DETECTION YET)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Face Registration Button
+                        Container(
+                          width: 110, // Further reduced
+                          height: 35, // Further reduced
+                          child: ElevatedButton(
+                            onPressed: _registerFace,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: isShiftSelected ? Colors.teal : Colors.grey,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              backgroundColor: kButtonColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 2,
                             ),
-                          )
-                        : _actionButton(Icons.logout, "Check Out", Colors.red, _stopTimer),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.face,
+                                  color: kTextColor,
+                                  size: 14, // Further reduced
+                                ),
+                                Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    color: kTextColor,
+                                    fontSize: 9, // Further reduced
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        
+                        // Manual Check-in Button (ALWAYS AVAILABLE)
+                        Container(
+                          width: 110, // Further reduced
+                          height: 35, // Further reduced
+                          child: ElevatedButton(
+                            onPressed: _manualCheckIn,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kButtonColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 2,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.touch_app,
+                                  color: kTextColor,
+                                  size: 14, // Further reduced
+                                ),
+                                Text(
+                                  'Check in',
+                                  style: TextStyle(
+                                    color: kTextColor,
+                                    fontSize: 9, // Further reduced
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ] else ...[
+                    // Step 3: After face registration - Show face detection + manual check-in
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Face Detection Button (ONLY AFTER REGISTRATION)
+                        Container(
+                          width: 110, // Further reduced
+                          height: 35, // Further reduced
+                          child: ElevatedButton(
+                            onPressed: _faceDetectionCheckIn,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kButtonColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 2,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.face_retouching_natural,
+                                  color: kTextColor,
+                                  size: 14, // Further reduced
+                                ),
+                                Text(
+                                  'Face detect',
+                                  style: TextStyle(
+                                    color: kTextColor,
+                                    fontSize: 9, // Further reduced
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        
+                        // Manual Check-in Button (BACKUP OPTION)
+                        Container(
+                          width: 110, // Further reduced
+                          height: 35, // Further reduced
+                          child: ElevatedButton(
+                            onPressed: _manualCheckIn,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kButtonColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 2,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.touch_app,
+                                  color: kTextColor,
+                                  size: 14, // Further reduced
+                                ),
+                                Text(
+                                  'Check in',
+                                  style: TextStyle(
+                                    color: kTextColor,
+                                    fontSize: 9, // Further reduced
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
-                ),
+                ] else ...[
+                  // Step 4: After check-in - Show check-out button
+                  Container(
+                    width: 130,
+                    height: 40,
+                    child: ElevatedButton(
+                      onPressed: _checkOut,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFFF6B6B),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        elevation: 2,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            color: kTextColor,
+                            size: 13,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            'Check Out',
+                            style: TextStyle(
+                              color: kTextColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+                
+                Spacer(),
               ],
             ),
           ),
@@ -744,42 +711,35 @@ class _AttendancePageState extends State<AttendancePage> {
     );
   }
 
-  String _monthName(int month) {
-    const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-    return months[month - 1];
-  }
-
-  Widget _timeField(String value) {
+  // Helper method to build time boxes
+  Widget _buildTimeBox(String time) {
     return Container(
-      width: 36,
-      height: 36,
-      alignment: Alignment.center,
+      width: 42,
+      height: 32,
       decoration: BoxDecoration(
-        color: kPrimaryBackgroundTop,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.black54),
+        border: isTimerRunning 
+            ? Border.all(color: Colors.green, width: 2)
+            : Border.all(color: Colors.grey.withOpacity(0.3), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
-      child: Text(
-        value,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-      ),
-    );
-  }
-
-  Widget _actionButton(IconData icon, String label, Color color, VoidCallback onPressed) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 18),
-      label: Text(label, style: const TextStyle(fontSize: 13)),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 3,
+      child: Center(
+        child: Text(
+          time,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: isTimerRunning ? Colors.green : kButtonColor,
+          ),
+        ),
       ),
     );
   }

@@ -1,3 +1,6 @@
+
+
+
 // class AttendanceData {
 //   final int totalDays;
 //   final int presentCount;
@@ -6,6 +9,8 @@
 //   final int lateCheckIn;
 //   final int earlyCheckOut;
 //   final int permissionCount;
+//   final List<DateTime> presentDates;
+//   final List<DateTime> absentDates;
 
 //   AttendanceData({
 //     required this.totalDays,
@@ -14,13 +19,12 @@
 //     required this.leaveCount,
 //     required this.lateCheckIn,
 //     required this.earlyCheckOut,
-//     required this.permissionCount, required List<DateTime> absentDates, required List<DateTime> presentDates,
+//     required this.permissionCount,
+//     required this.presentDates,
+//     required this.absentDates,
 //   });
-
-//   get presentDates => null;
-
-//   get absentDates => null;
 // }
+
 
 
 class AttendanceData {
@@ -45,4 +49,6 @@ class AttendanceData {
     required this.presentDates,
     required this.absentDates,
   });
+
+  get leaveDates => null;
 }
