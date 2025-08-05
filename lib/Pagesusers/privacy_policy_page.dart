@@ -1,4 +1,12 @@
+
+
+
 // import 'package:flutter/material.dart';
+
+// // Theme Colors
+// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+// const Color kAppBarColor = Color(0xFF8C6EAF);
 
 // class PrivacyPolicyPage extends StatelessWidget {
 //   const PrivacyPolicyPage({super.key});
@@ -11,13 +19,24 @@
 //           'Privacy Policy',
 //           style: TextStyle(fontWeight: FontWeight.bold),
 //         ),
+//         backgroundColor: kAppBarColor,
 //         centerTitle: true,
 //       ),
-//       body: const Padding(
-//         padding: EdgeInsets.all(16.0),
-//         child: SingleChildScrollView(
-//           child: Text(
-//             '''
+//       body: Container(
+//         width: double.infinity,
+//         height: double.infinity,
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+//             begin: Alignment.topCenter,
+//             end: Alignment.bottomCenter,
+//           ),
+//         ),
+//         child: const Padding(
+//           padding: EdgeInsets.all(16.0),
+//           child: SingleChildScrollView(
+//             child: Text(
+//               '''
 // This Privacy Policy describes how your personal information is collected, used, and shared when you use our Attendance Management App.
 
 // 1. **Data Collection**
@@ -41,8 +60,9 @@
 // If you have any questions about this policy, contact the admin.
 
 // Thank you for using our app!
-//             ''',
-//             style: TextStyle(fontSize: 16, height: 1.5),
+//               ''',
+//               style: TextStyle(fontSize: 16, height: 1.5),
+//             ),
 //           ),
 //         ),
 //       ),

@@ -1,4 +1,14 @@
+
+
+
 // import 'package:flutter/material.dart';
+
+// // Theme Colors
+// const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
+// const Color kAppBarColor = Color(0xFF8C6EAF);
+// const Color kButtonColor = Color(0xFF655193);
+// const Color kTextColor = Colors.white;
 
 // class ChangePasswordPage extends StatefulWidget {
 //   const ChangePasswordPage({super.key});
@@ -29,7 +39,6 @@
 //     }
 //   }
 
-//   // ✅ Strong password validation
 //   String? validateStrongPassword(String? value) {
 //     if (value == null || value.isEmpty) return 'Enter new password';
 //     if (value.length < 8) return 'Minimum 8 characters required';
@@ -53,7 +62,6 @@
 //     return Column(
 //       crossAxisAlignment: CrossAxisAlignment.start,
 //       children: [
-//         // Label with red star
 //         Text.rich(
 //           TextSpan(
 //             text: labelText,
@@ -64,8 +72,6 @@
 //           ),
 //         ),
 //         const SizedBox(height: 6),
-
-//         // Input container
 //         Container(
 //           margin: const EdgeInsets.only(bottom: 16),
 //           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -129,58 +135,78 @@
 //       appBar: AppBar(
 //         title: const Text('Change Password'),
 //         centerTitle: true,
+//         backgroundColor: kAppBarColor,
 //       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Form(
-//           key: _formKey,
-//           child: ListView(
-//             children: [
-//               buildPasswordInput(
-//                 labelText: 'Old Password',
-//                 hintText: 'Old Password',
-//                 controller: _oldPassController,
-//                 obscureText: _isOldObscure,
-//                 toggleObscure: () => setState(() => _isOldObscure = !_isOldObscure),
-//                 validator: (value) =>
-//                     value == null || value.isEmpty ? 'Enter old password' : null,
-//               ),
-
-//               buildPasswordInput(
-//                 labelText: 'New Password',
-//                 hintText: 'New Password',
-//                 controller: _newPassController,
-//                 obscureText: _isNewObscure,
-//                 toggleObscure: () => setState(() => _isNewObscure = !_isNewObscure),
-//                 validator: validateStrongPassword,
-//               ),
-
-//               buildPasswordInput(
-//                 labelText: 'Confirm New Password',
-//                 hintText: 'Confirm New Password',
-//                 controller: _confirmPassController,
-//                 obscureText: _isConfirmObscure,
-//                 toggleObscure: () => setState(() => _isConfirmObscure = !_isConfirmObscure),
-//                 validator: (value) {
-//                   if (value == null || value.isEmpty) return 'Confirm your password';
-//                   if (value != _newPassController.text) return 'Passwords do not match';
-//                   return null;
-//                 },
-//               ),
-
-//               buildPasswordRules(),
-
-//               ElevatedButton(
-//                 onPressed: _changePassword,
-//                 child: const Text('Change Password'),
-//               ),
-//             ],
+//       body: Container(
+//         width: double.infinity,
+//         height: double.infinity,
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+//             begin: Alignment.topCenter,
+//             end: Alignment.bottomCenter,
+//           ),
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.all(20.0),
+//           child: Form(
+//             key: _formKey,
+//             child: ListView(
+//               children: [
+//                 buildPasswordInput(
+//                   labelText: 'Old Password',
+//                   hintText: 'Old Password',
+//                   controller: _oldPassController,
+//                   obscureText: _isOldObscure,
+//                   toggleObscure: () =>
+//                       setState(() => _isOldObscure = !_isOldObscure),
+//                   validator: (value) =>
+//                       value == null || value.isEmpty ? 'Enter old password' : null,
+//                 ),
+//                 buildPasswordInput(
+//                   labelText: 'New Password',
+//                   hintText: 'New Password',
+//                   controller: _newPassController,
+//                   obscureText: _isNewObscure,
+//                   toggleObscure: () =>
+//                       setState(() => _isNewObscure = !_isNewObscure),
+//                   validator: validateStrongPassword,
+//                 ),
+//                 buildPasswordInput(
+//                   labelText: 'Confirm New Password',
+//                   hintText: 'Confirm New Password',
+//                   controller: _confirmPassController,
+//                   obscureText: _isConfirmObscure,
+//                   toggleObscure: () =>
+//                       setState(() => _isConfirmObscure = !_isConfirmObscure),
+//                   validator: (value) {
+//                     if (value == null || value.isEmpty) {
+//                       return 'Confirm your password';
+//                     }
+//                     if (value != _newPassController.text) {
+//                       return 'Passwords do not match';
+//                     }
+//                     return null;
+//                   },
+//                 ),
+//                 buildPasswordRules(),
+//                 ElevatedButton(
+//                   onPressed: _changePassword,
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: kButtonColor,
+//                     foregroundColor: kTextColor,
+//                   ),
+//                   child: const Text('Change Password'),
+//                 ),
+//               ],
+//             ),
 //           ),
 //         ),
 //       ),
 //     );
 //   }
 // }
+
 
 
 import 'package:flutter/material.dart';
@@ -201,7 +227,6 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _oldPassController = TextEditingController();
   final TextEditingController _newPassController = TextEditingController();
   final TextEditingController _confirmPassController = TextEditingController();
@@ -233,49 +258,39 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return null;
   }
 
-  Widget buildPasswordInput({
+  Widget buildFloatingPasswordField({
     required String labelText,
-    required String hintText,
     required TextEditingController controller,
     required bool obscureText,
     required VoidCallback toggleObscure,
     required String? Function(String?) validator,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text.rich(
-          TextSpan(
-            text: labelText,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            children: const [
-              TextSpan(text: ' *', style: TextStyle(color: Colors.red)),
-            ],
-          ),
-        ),
-        const SizedBox(height: 6),
-        Container(
-          margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: controller,
-            obscureText: obscureText,
-            decoration: InputDecoration(
-              hintText: hintText,
-              border: InputBorder.none,
-              suffixIcon: IconButton(
-                icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
-                onPressed: toggleObscure,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          label: RichText(
+            text: TextSpan(
+              text: labelText,
+              style: const TextStyle(color: Colors.black, fontSize: 16),
+              children: const [
+                TextSpan(
+                  text: ' *',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ],
             ),
-            validator: validator,
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          suffixIcon: IconButton(
+            icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
+            onPressed: toggleObscure,
           ),
         ),
-      ],
+        validator: validator,
+      ),
     );
   }
 
@@ -335,32 +350,27 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             key: _formKey,
             child: ListView(
               children: [
-                buildPasswordInput(
+                const SizedBox(height: 10),
+                buildFloatingPasswordField(
                   labelText: 'Old Password',
-                  hintText: 'Old Password',
                   controller: _oldPassController,
                   obscureText: _isOldObscure,
-                  toggleObscure: () =>
-                      setState(() => _isOldObscure = !_isOldObscure),
+                  toggleObscure: () => setState(() => _isOldObscure = !_isOldObscure),
                   validator: (value) =>
                       value == null || value.isEmpty ? 'Enter old password' : null,
                 ),
-                buildPasswordInput(
+                buildFloatingPasswordField(
                   labelText: 'New Password',
-                  hintText: 'New Password',
                   controller: _newPassController,
                   obscureText: _isNewObscure,
-                  toggleObscure: () =>
-                      setState(() => _isNewObscure = !_isNewObscure),
+                  toggleObscure: () => setState(() => _isNewObscure = !_isNewObscure),
                   validator: validateStrongPassword,
                 ),
-                buildPasswordInput(
+                buildFloatingPasswordField(
                   labelText: 'Confirm New Password',
-                  hintText: 'Confirm New Password',
                   controller: _confirmPassController,
                   obscureText: _isConfirmObscure,
-                  toggleObscure: () =>
-                      setState(() => _isConfirmObscure = !_isConfirmObscure),
+                  toggleObscure: () => setState(() => _isConfirmObscure = !_isConfirmObscure),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Confirm your password';

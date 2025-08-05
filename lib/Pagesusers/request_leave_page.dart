@@ -1,10 +1,11 @@
 
 
-
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 
+// // Theme Colors
 // const Color kPrimaryBackgroundTop = Color(0xFFFFFFFF);
+// const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 // const Color kAppBarColor = Color(0xFF8C6EAF);
 // const Color kButtonColor = Color(0xFF655193);
 // const Color kTextColor = Colors.white;
@@ -64,8 +65,7 @@
 //   bool hasCasualLeaveInSameMonth() {
 //     if (selectedLeaveType != 'Casual Leave' || fromDate == null) return false;
 //     return appliedCasualLeaves.any(
-//       (leave) =>
-//           leave.month == fromDate!.month && leave.year == fromDate!.year,
+//       (leave) => leave.month == fromDate!.month && leave.year == fromDate!.year,
 //     );
 //   }
 
@@ -129,189 +129,208 @@
 //     final casualLeaveTaken = hasCasualLeaveInSameMonth();
 
 //     return Scaffold(
-//       backgroundColor: kPrimaryBackgroundTop,
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           padding: const EdgeInsets.all(16),
-//           child: Form(
-//             key: _formKey,
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Row(
-//                   children: [
-//                     GestureDetector(
-//                       onTap: () => Navigator.pop(context),
-//                       child: const Icon(Icons.arrow_back, color: kAppBarColor),
-//                     ),
-//                     const SizedBox(width: 12),
-//                     const Text(
-//                       "Apply Leave",
-//                       style: TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.bold,
-//                         color: kAppBarColor,
+//       body: Container(
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             colors: [kPrimaryBackgroundTop, kPrimaryBackgroundBottom],
+//             begin: Alignment.topCenter,
+//             end: Alignment.bottomCenter,
+//           ),
+//         ),
+//         child: SafeArea(
+//           child: SingleChildScrollView(
+//             padding: const EdgeInsets.all(16),
+//             child: Form(
+//               key: _formKey,
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   // App Bar Section
+//                   Row(
+//                     children: [
+//                       GestureDetector(
+//                         onTap: () => Navigator.pop(context),
+//                         child: const Icon(Icons.arrow_back, color: kAppBarColor),
 //                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(height: 24),
+//                       const SizedBox(width: 12),
+//                       const Text(
+//                         "Apply Leave",
+//                         style: TextStyle(
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                           color: kAppBarColor,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                   const SizedBox(height: 24),
 
-//                 DropdownButtonFormField<String>(
-//                   value: selectedLeaveType,
-//                   decoration: _inputDecorationWithLabel("Leave Type"),
-//                   items: leaveTypes.map((type) {
-//                     return DropdownMenuItem(value: type, child: Text(type));
-//                   }).toList(),
-//                   onChanged: (val) {
-//                     setState(() {
-//                       selectedLeaveType = val;
-//                       selectedLeaveDuration = null;
-//                       customLeaveController.clear();
-//                     });
-//                   },
-//                   validator: (val) => val == null ? "Please select leave type" : null,
-//                 ),
-//                 const SizedBox(height: 16),
-
-//                 if (selectedLeaveType != null)
+//                   // Leave Type Dropdown
 //                   DropdownButtonFormField<String>(
-//                     value: selectedLeaveDuration,
-//                     decoration: _inputDecorationWithLabel("Leave Duration"),
-//                     items: durationOptions.map((d) {
-//                       return DropdownMenuItem(value: d, child: Text(d));
+//                     value: selectedLeaveType,
+//                     decoration: _inputDecorationWithLabel("Leave Type"),
+//                     items: leaveTypes.map((type) {
+//                       return DropdownMenuItem(value: type, child: Text(type));
 //                     }).toList(),
 //                     onChanged: (val) {
 //                       setState(() {
-//                         selectedLeaveDuration = val;
-//                         if (val != 'Others') {
-//                           customLeaveController.clear();
-//                         }
+//                         selectedLeaveType = val;
+//                         selectedLeaveDuration = null;
+//                         customLeaveController.clear();
 //                       });
 //                     },
-//                     validator: (val) => val == null ? "Select duration" : null,
+//                     validator: (val) => val == null ? "Please select leave type" : null,
 //                   ),
+//                   const SizedBox(height: 16),
 
-//                 if (selectedLeaveDuration == 'Others')
-//                   Padding(
-//                     padding: const EdgeInsets.only(top: 12),
-//                     child: TextFormField(
-//                       controller: customLeaveController,
-//                       keyboardType: TextInputType.number,
-//                       decoration: _inputDecorationWithLabel("Enter number of days"),
-//                       validator: (val) =>
-//                           val == null || val.isEmpty ? "Enter custom days" : null,
-//                     ),
-//                   ),
-//                 const SizedBox(height: 16),
-
-//                 DropdownButtonFormField<String>(
-//                   value: selectedShift,
-//                   decoration: _inputDecorationWithLabel("Shift"),
-//                   items: shifts.map((shift) {
-//                     return DropdownMenuItem(value: shift, child: Text(shift));
-//                   }).toList(),
-//                   onChanged: (val) => setState(() => selectedShift = val),
-//                   validator: (val) => val == null ? "Select shift" : null,
-//                 ),
-//                 if (selectedShift != null)
-//                   Padding(
-//                     padding: const EdgeInsets.only(top: 8),
-//                     child: Text(
-//                       "Time: ${shiftTimes[selectedShift]!}",
-//                       style: const TextStyle(fontSize: 14),
-//                     ),
-//                   ),
-//                 const SizedBox(height: 16),
-
-//                 GestureDetector(
-//                   onTap: () => pickDate(context, true),
-//                   child: AbsorbPointer(
-//                     child: TextFormField(
-//                       decoration: _inputDecorationWithLabel("From Date"),
-//                       controller: TextEditingController(text: formatDate(fromDate)),
-//                       validator: (val) => val == null || val.isEmpty ? "Select From Date" : null,
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 16),
-
-//                 GestureDetector(
-//                   onTap: () => pickDate(context, false),
-//                   child: AbsorbPointer(
-//                     child: TextFormField(
-//                       decoration: _inputDecorationWithLabel("To Date"),
-//                       controller: TextEditingController(text: formatDate(toDate)),
-//                       validator: (val) {
-//                         if (val == null || val.isEmpty) return "Select To Date";
-//                         if (errorMessage != null) return errorMessage;
-//                         return null;
+//                   // Duration Dropdown
+//                   if (selectedLeaveType != null)
+//                     DropdownButtonFormField<String>(
+//                       value: selectedLeaveDuration,
+//                       decoration: _inputDecorationWithLabel("Leave Duration"),
+//                       items: durationOptions.map((d) {
+//                         return DropdownMenuItem(value: d, child: Text(d));
+//                       }).toList(),
+//                       onChanged: (val) {
+//                         setState(() {
+//                           selectedLeaveDuration = val;
+//                           if (val != 'Others') {
+//                             customLeaveController.clear();
+//                           }
+//                         });
 //                       },
+//                       validator: (val) => val == null ? "Select duration" : null,
+//                     ),
+
+//                   // Custom Days Text Field
+//                   if (selectedLeaveDuration == 'Others')
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 12),
+//                       child: TextFormField(
+//                         controller: customLeaveController,
+//                         keyboardType: TextInputType.number,
+//                         decoration: _inputDecorationWithLabel("Enter number of days"),
+//                         validator: (val) =>
+//                             val == null || val.isEmpty ? "Enter custom days" : null,
+//                       ),
+//                     ),
+//                   const SizedBox(height: 16),
+
+//                   // Shift Dropdown
+//                   DropdownButtonFormField<String>(
+//                     value: selectedShift,
+//                     decoration: _inputDecorationWithLabel("Shift"),
+//                     items: shifts.map((shift) {
+//                       return DropdownMenuItem(value: shift, child: Text(shift));
+//                     }).toList(),
+//                     onChanged: (val) => setState(() => selectedShift = val),
+//                     validator: (val) => val == null ? "Select shift" : null,
+//                   ),
+//                   if (selectedShift != null)
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 8),
+//                       child: Text(
+//                         "Time: ${shiftTimes[selectedShift]!}",
+//                         style: const TextStyle(fontSize: 14),
+//                       ),
+//                     ),
+//                   const SizedBox(height: 16),
+
+//                   // From Date
+//                   GestureDetector(
+//                     onTap: () => pickDate(context, true),
+//                     child: AbsorbPointer(
+//                       child: TextFormField(
+//                         decoration: _inputDecorationWithLabel("From Date"),
+//                         controller: TextEditingController(text: formatDate(fromDate)),
+//                         validator: (val) =>
+//                             val == null || val.isEmpty ? "Select From Date" : null,
+//                       ),
 //                     ),
 //                   ),
-//                 ),
-//                 if (errorMessage != null)
-//                   Padding(
-//                     padding: const EdgeInsets.only(top: 8),
-//                     child: Text(errorMessage!, style: const TextStyle(color: Colors.red)),
-//                   ),
-//                 const SizedBox(height: 16),
+//                   const SizedBox(height: 16),
 
-//                 TextFormField(
-//                   controller: reasonController,
-//                   maxLines: 2,
-//                   decoration: _inputDecorationWithLabel("Reason").copyWith(hintText: "Enter your reason"),
-//                   validator: (val) => val == null || val.isEmpty ? "Enter reason" : null,
-//                 ),
-//                 const SizedBox(height: 24),
-
-//                 if (casualLeaveTaken && selectedLeaveType == 'Casual Leave')
-//                   Container(
-//                     padding: const EdgeInsets.all(12),
-//                     margin: const EdgeInsets.only(bottom: 16),
-//                     decoration: BoxDecoration(
-//                       color: Colors.red.shade50,
-//                       borderRadius: BorderRadius.circular(8),
-//                       border: Border.all(color: Colors.red),
-//                     ),
-//                     child: const Text(
-//                       "You have already applied for Casual Leave this month.",
-//                       style: TextStyle(color: Colors.red),
+//                   // To Date
+//                   GestureDetector(
+//                     onTap: () => pickDate(context, false),
+//                     child: AbsorbPointer(
+//                       child: TextFormField(
+//                         decoration: _inputDecorationWithLabel("To Date"),
+//                         controller: TextEditingController(text: formatDate(toDate)),
+//                         validator: (val) {
+//                           if (val == null || val.isEmpty) return "Select To Date";
+//                           if (errorMessage != null) return errorMessage;
+//                           return null;
+//                         },
+//                       ),
 //                     ),
 //                   ),
+//                   if (errorMessage != null)
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 8),
+//                       child: Text(errorMessage!, style: const TextStyle(color: Colors.red)),
+//                     ),
+//                   const SizedBox(height: 16),
 
-//                 SizedBox(
-//                   width: double.infinity,
-//                   height: 44,
-//                   child: ElevatedButton(
-//                     onPressed: () {
-//                       if (_formKey.currentState!.validate()) {
-//                         if (selectedLeaveType == 'Casual Leave' && casualLeaveTaken) {
+//                   // Reason
+//                   TextFormField(
+//                     controller: reasonController,
+//                     maxLines: 2,
+//                     decoration: _inputDecorationWithLabel("Reason").copyWith(hintText: "Enter your reason"),
+//                     validator: (val) => val == null || val.isEmpty ? "Enter reason" : null,
+//                   ),
+//                   const SizedBox(height: 24),
+
+//                   // Casual Leave Notice
+//                   if (casualLeaveTaken && selectedLeaveType == 'Casual Leave')
+//                     Container(
+//                       padding: const EdgeInsets.all(12),
+//                       margin: const EdgeInsets.only(bottom: 16),
+//                       decoration: BoxDecoration(
+//                         color: Colors.red.shade50,
+//                         borderRadius: BorderRadius.circular(8),
+//                         border: Border.all(color: Colors.red),
+//                       ),
+//                       child: const Text(
+//                         "You have already applied for Casual Leave this month.",
+//                         style: TextStyle(color: Colors.red),
+//                       ),
+//                     ),
+
+//                   // Submit Button
+//                   SizedBox(
+//                     width: double.infinity,
+//                     height: 44,
+//                     child: ElevatedButton(
+//                       onPressed: () {
+//                         if (_formKey.currentState!.validate()) {
+//                           if (selectedLeaveType == 'Casual Leave' && casualLeaveTaken) {
+//                             ScaffoldMessenger.of(context).showSnackBar(
+//                               const SnackBar(
+//                                 content: Text("You already applied Casual Leave this month."),
+//                                 backgroundColor: Colors.red,
+//                               ),
+//                             );
+//                             return;
+//                           }
+
 //                           ScaffoldMessenger.of(context).showSnackBar(
 //                             const SnackBar(
-//                               content: Text("You already applied Casual Leave this month."),
-//                               backgroundColor: Colors.red,
+//                               content: Text("Leave Request Submitted Successfully"),
+//                               backgroundColor: Colors.black,
 //                             ),
 //                           );
-//                           return;
 //                         }
-
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           const SnackBar(
-//                             content: Text("Leave Request Submitted Successfully"),
-//                             backgroundColor: Colors.green,
-//                           ),
-//                         );
-//                       }
-//                     },
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: kButtonColor,
-//                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//                       },
+//                       style: ElevatedButton.styleFrom(
+//                         backgroundColor: kButtonColor,
+//                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//                       ),
+//                       child: const Text("Submit", style: TextStyle(color: kTextColor)),
 //                     ),
-//                     child: const Text("Submit", style: TextStyle(color: kTextColor)),
 //                   ),
-//                 ),
-//               ],
+//                 ],
+//               ),
 //             ),
 //           ),
 //         ),
@@ -345,6 +364,7 @@
 //   }
 // }
 
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -368,7 +388,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
   String? selectedLeaveType;
   String? selectedShift;
   String? selectedLeaveDuration;
-  String? customLeaveDays;
   DateTime? fromDate;
   DateTime? toDate;
   String? errorMessage;
@@ -468,6 +487,28 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
     }
   }
 
+  void onSubmit() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Leave request submitted "),
+        backgroundColor: Color.fromARGB(255, 15, 15, 15),
+      ),
+    );
+
+    // Reset form
+    _formKey.currentState!.reset();
+    setState(() {
+      selectedLeaveType = null;
+      selectedShift = null;
+      selectedLeaveDuration = null;
+      fromDate = null;
+      toDate = null;
+      errorMessage = null;
+      reasonController.clear();
+      customLeaveController.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final durationOptions = getLeaveDurationOptions(selectedLeaveType);
@@ -490,27 +531,31 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // App Bar Section
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(Icons.arrow_back, color: kAppBarColor),
-                      ),
-                      const SizedBox(width: 12),
-                      const Text(
-                        "Apply Leave",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: kAppBarColor,
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    color: kAppBarColor,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: const Icon(Icons.arrow_back, color: Colors.white),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 12),
+                        const Text(
+                          "Apply Leave",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Leave Type Dropdown
                   DropdownButtonFormField<String>(
                     value: selectedLeaveType,
                     decoration: _inputDecorationWithLabel("Leave Type"),
@@ -528,7 +573,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Duration Dropdown
                   if (selectedLeaveType != null)
                     DropdownButtonFormField<String>(
                       value: selectedLeaveDuration,
@@ -547,7 +591,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                       validator: (val) => val == null ? "Select duration" : null,
                     ),
 
-                  // Custom Days Text Field
                   if (selectedLeaveDuration == 'Others')
                     Padding(
                       padding: const EdgeInsets.only(top: 12),
@@ -561,7 +604,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                     ),
                   const SizedBox(height: 16),
 
-                  // Shift Dropdown
                   DropdownButtonFormField<String>(
                     value: selectedShift,
                     decoration: _inputDecorationWithLabel("Shift"),
@@ -581,7 +623,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                     ),
                   const SizedBox(height: 16),
 
-                  // From Date
                   GestureDetector(
                     onTap: () => pickDate(context, true),
                     child: AbsorbPointer(
@@ -595,7 +636,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // To Date
                   GestureDetector(
                     onTap: () => pickDate(context, false),
                     child: AbsorbPointer(
@@ -617,23 +657,22 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                     ),
                   const SizedBox(height: 16),
 
-                  // Reason
                   TextFormField(
                     controller: reasonController,
                     maxLines: 2,
-                    decoration: _inputDecorationWithLabel("Reason").copyWith(hintText: "Enter your reason"),
+                    decoration: _inputDecorationWithLabel("Reason")
+                        .copyWith(hintText: "Enter your reason"),
                     validator: (val) => val == null || val.isEmpty ? "Enter reason" : null,
                   ),
                   const SizedBox(height: 24),
 
-                  // Casual Leave Notice
                   if (casualLeaveTaken && selectedLeaveType == 'Casual Leave')
                     Container(
                       padding: const EdgeInsets.all(12),
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
                         color: Colors.red.shade50,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.red),
                       ),
                       child: const Text(
@@ -642,7 +681,6 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                       ),
                     ),
 
-                  // Submit Button
                   SizedBox(
                     width: double.infinity,
                     height: 44,
@@ -658,18 +696,12 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
                             );
                             return;
                           }
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Leave Request Submitted Successfully"),
-                              backgroundColor: Colors.black,
-                            ),
-                          );
+                          onSubmit(); // 🔁 Submit without backend
                         }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: kButtonColor,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                       child: const Text("Submit", style: TextStyle(color: kTextColor)),
                     ),
@@ -699,7 +731,7 @@ class _RequestLeavePageState extends State<RequestLeavePage> {
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: kButtonColor, width: 1.5),
+        borderSide: const BorderSide(color: kButtonColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
