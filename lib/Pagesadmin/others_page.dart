@@ -159,7 +159,7 @@ const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
 
 class OthersPage extends StatelessWidget {
-  const OthersPage({Key? key}) : super(key: key);
+  const OthersPage({super.key});
 
   @override
   Widget build(BuildContext context) {

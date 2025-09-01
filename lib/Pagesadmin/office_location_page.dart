@@ -691,13 +691,14 @@ class _OfficeLocationPageState extends State<OfficeLocationPage> {
                   height: 260,
                   child: Stack(
                     children: [
-                      FlutterMap(
-                        mapController: _mapController,
-                        options: MapOptions(
-                          center: _mapCenter,
-                          zoom: 6.0,
-                          interactiveFlags: InteractiveFlag.all,
-                        ),
+                  FlutterMap(
+                  options: MapOptions(
+                  initialCenter: _mapCenter,               // ← was `center`
+                    initialZoom: 14,                         // ← was `zoom`
+                    interactionOptions: const InteractionOptions(
+                      flags: InteractiveFlag.all & ~InteractiveFlag.rotate,  // ← was `interactiveFlags`
+                    ),
+                  ),
                         children: [
                           TileLayer(
                             urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

@@ -252,7 +252,7 @@ class _MyTasksPageState extends State<MyTasksPage> {
   String? _fileName;
   bool _isImage = true;
 
-  String? assignedTask = "Complete the Flutter login screen by 5 PM";
+  String? assignedTask = "The task has not been assigned to the admin";
 
   Future<void> _pickImageFromCamera() async {
     final picker = ImagePicker();

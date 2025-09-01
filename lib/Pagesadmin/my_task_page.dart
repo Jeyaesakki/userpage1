@@ -309,7 +309,7 @@ class _MyTaskPageState extends State<MyTaskPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                ...uploadedFiles.keys.map((section) => _buildTaskSection(section)).toList(),
+                ...uploadedFiles.keys.map((section) => _buildTaskSection(section)),
               ],
             ),
           ),

@@ -34,7 +34,7 @@ class CompanyProfile {
 }
 
 class CompanySetupPage extends StatefulWidget {
-  const CompanySetupPage({Key? key}) : super(key: key);
+  const CompanySetupPage({super.key});
 
   @override
   State<CompanySetupPage> createState() => _CompanySetupPageState();
@@ -131,13 +131,8 @@ class _CompanySetupPageState extends State<CompanySetupPage> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Logo URL
-                      _buildField(
-                        controller: _logoUrlController,
-                        label: "Logo URL (Optional)",
-                        icon: Icons.image,
-                        required: false,
-                      ),
+                      
+                      
                       const SizedBox(height: 32),
 
                       SizedBox(

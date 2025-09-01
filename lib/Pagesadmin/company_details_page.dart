@@ -229,7 +229,7 @@ const Color kButtonColor             = Color(0xFF655193);
 const Color kTextColor               = Colors.white;
 
 class CompanyDetailsFormPage extends StatefulWidget {
-  const CompanyDetailsFormPage({Key? key}) : super(key: key);
+  const CompanyDetailsFormPage({super.key});
 
   @override
   _CompanyDetailsFormPageState createState() => _CompanyDetailsFormPageState();

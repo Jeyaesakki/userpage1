@@ -328,7 +328,7 @@ const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
 
 class PermissionTimePage extends StatefulWidget {
-  const PermissionTimePage({Key? key, required this.isPopup}) : super(key: key);
+  const PermissionTimePage({super.key, required this.isPopup});
   final bool isPopup;
 
   @override

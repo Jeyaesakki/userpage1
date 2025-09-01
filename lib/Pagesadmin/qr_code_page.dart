@@ -236,7 +236,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 
 const Color kPrimaryBackgroundTop    = Color(0xFFFFFFFF);
 const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
@@ -297,10 +297,9 @@ class _OrganizationQrPageState extends State<OrganizationQrPage> {
           await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-      final result = await ImageGallerySaver.saveImage(
-        pngBytes,
-        quality: 100,
-        name: "qr_code_${DateTime.now().millisecondsSinceEpoch}",
+      final result = await ImageGallerySaverPlus.saveImage(
+        pngBytes,                             // Uint8List
+        name: 'qr_${DateTime.now().millisecondsSinceEpoch}',
       );
       if (result['isSuccess']) {
         ScaffoldMessenger.of(context).showSnackBar(

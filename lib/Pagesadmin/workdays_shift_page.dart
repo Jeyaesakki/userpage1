@@ -271,7 +271,7 @@ class _WorkdaysShiftPageState extends State<WorkdaysShiftPage> {
   bool _isShiftPermissionClicked = false;
   bool _isCreateShiftClicked = false;
 
-  List<Map<String, String>> _createdShifts = [];
+  final List<Map<String, String>> _createdShifts = [];
 
   void _navigateToShiftPermission(BuildContext context) {
     Navigator.push(
