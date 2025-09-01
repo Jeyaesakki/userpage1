@@ -10,7 +10,7 @@ const Color kTextColor = Colors.white;
 const Color kHighlightBoxColor = Color(0xFF655193);
 
 class RewardsPage extends StatefulWidget {
-  const RewardsPage({Key? key}) : super(key: key);
+  const RewardsPage({super.key});
 
   @override
   State<RewardsPage> createState() => _RewardsPageState();

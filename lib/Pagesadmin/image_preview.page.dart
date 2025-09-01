@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ImagePreviewPage extends StatelessWidget {
   final File imageFile;
 
-  const ImagePreviewPage({Key? key, required this.imageFile}) : super(key: key);
+  const ImagePreviewPage({super.key, required this.imageFile});
 
   @override
   Widget build(BuildContext context) {

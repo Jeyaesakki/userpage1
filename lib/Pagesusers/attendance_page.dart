@@ -10,6 +10,8 @@ const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
 
 class AttendanceScreen extends StatefulWidget {
+  const AttendanceScreen({super.key});
+
   @override
   _AttendanceScreenState createState() => _AttendanceScreenState();
 }
@@ -522,7 +524,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // Face Registration Button
-                        Container(
+                        SizedBox(
                           width: 110, // Further reduced
                           height: 35, // Further reduced
                           child: ElevatedButton(
@@ -556,7 +558,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         ),
                         
                         // Manual Check-in Button (ALWAYS AVAILABLE)
-                        Container(
+                        SizedBox(
                           width: 110, // Further reduced
                           height: 35, // Further reduced
                           child: ElevatedButton(
@@ -596,7 +598,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // Face Detection Button (ONLY AFTER REGISTRATION)
-                        Container(
+                        SizedBox(
                           width: 110, // Further reduced
                           height: 35, // Further reduced
                           child: ElevatedButton(
@@ -630,7 +632,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         ),
                         
                         // Manual Check-in Button (BACKUP OPTION)
-                        Container(
+                        SizedBox(
                           width: 110, // Further reduced
                           height: 35, // Further reduced
                           child: ElevatedButton(
@@ -667,7 +669,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   ],
                 ] else ...[
                   // Step 4: After check-in - Show check-out button
-                  Container(
+                  SizedBox(
                     width: 130,
                     height: 40,
                     child: ElevatedButton(

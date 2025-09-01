@@ -243,7 +243,7 @@ class _LeaveApprovalsScreenState extends State<LeaveApprovalsScreen> {
                   ),
                   _buildStatusButton("Pending", Colors.pink[100]!),
                   const SizedBox(width: 6),
-                  _buildStatusButton("Approved", Colors.greenAccent),
+                  _buildStatusButton("Approved", const Color.fromARGB(255, 184, 223, 204)),
                   const SizedBox(width: 6),
                   _buildStatusButton("Rejected", Colors.red[200]!),
                 ],

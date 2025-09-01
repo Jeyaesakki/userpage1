@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:serv_app/Pagesusers/login_page.dart';
 import 'company_setup_page.dart';
 import 'live_attendance_page.dart';
 import 'leave_approval_screen.dart';
@@ -11,8 +12,7 @@ import 'settings_page.dart'; // ✅ Added
 class AdminDashboard extends StatefulWidget {
   final CompanyProfile companyProfile;
 
-  const AdminDashboard({Key? key, required this.companyProfile})
-      : super(key: key);
+  const AdminDashboard({super.key, required this.companyProfile});
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -56,7 +56,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const CompanySetupPage(),
+                        builder: (_) => const LoginPage(),
                       ),
                     );
                   });

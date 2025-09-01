@@ -790,8 +790,7 @@ const Color kButtonColor = Color(0xFF655193); // Updated button color
 const Color kTextColor = Colors.white;
 
 class AttendanceReportScreen extends StatefulWidget {
-  const AttendanceReportScreen({Key? key, required String initialFilter})
-    : super(key: key);
+  const AttendanceReportScreen({super.key, required String initialFilter});
 
   @override
   State<AttendanceReportScreen> createState() => _AttendanceReportScreenState();

@@ -148,7 +148,7 @@ const Color kPrimaryBackgroundBottom = Color(0xFFD1C4E9);
 const Color kAppBarColor = Color(0xFF8C6EAF);
 
 class PermissionsPage extends StatefulWidget {
-  const PermissionsPage({Key? key}) : super(key: key);
+  const PermissionsPage({super.key});
 
   @override
   State<PermissionsPage> createState() => _PermissionsPageState();

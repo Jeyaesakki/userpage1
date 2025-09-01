@@ -282,12 +282,12 @@ class TypeOfRequestPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(item['icon'], size: 40, color: kButtonColor),
+                      Icon(item['icon'], size: 35, color: kButtonColor),
                       const SizedBox(height: 10),
                       Text(
                         item['title'],
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: kAppBarColor,
                         ),

@@ -609,6 +609,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
   );
 }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,

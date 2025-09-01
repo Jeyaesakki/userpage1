@@ -165,7 +165,7 @@ const Color kButtonColor = Color(0xFF655193);
 const Color kTextColor = Colors.white;
 
 class FeedbackPage extends StatelessWidget {
-  const FeedbackPage({Key? key, required String employeeName, required String employeeId}) : super(key: key);
+  const FeedbackPage({super.key, required String employeeName, required String employeeId});
 
   // 🔹 Dummy feedback data
   final List<Map<String, String>> feedbackList = const [
@@ -260,7 +260,7 @@ class FeedbackPage extends StatelessWidget {
                       ),
                     ),
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),
